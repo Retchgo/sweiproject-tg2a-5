@@ -7,6 +7,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
+
+function loadActivity($scope, $http, $activityId){
+	$http({
+		method: 'GET',
+		//url: 'activity/' + $activityId;
+		url: 'activity/1'
+	}).then(function (response) {
+		$scope.activities = response.data;
+	});
+}
+
 
 </head>
 <body>
@@ -19,9 +32,12 @@
 	<div id="menu">
 		Hier kommt das Menü hin!!
 	</div>
-	<h3>Überschrift</h3>
+	<h3>{{activity.title}}</h3>
 	<div id="body">
-		Text
+		<p>{{activity.creator}}</p>
+		<p>{{activity.date}}</p>
+		<p>{{activity.categorie}}</p>
+		<p>{{activity.text}}</p>
 	</div>
 </div>
 </body>
