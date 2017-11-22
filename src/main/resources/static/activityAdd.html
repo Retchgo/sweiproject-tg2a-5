@@ -22,7 +22,6 @@
 
 <script>
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
-
 	function loadActivities ($scope, $http){
 		$http({
        		 method : 'GET',
@@ -31,7 +30,6 @@ var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
      			 $scope.activities = response.data;
   		});
   	}
-
 app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
   	
   	loadActivities($scope, $http);
@@ -43,16 +41,16 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
   	};
   	
   	$scope.add = function(){
-    	$dialog.dialog(angular.extend(addDialogOptions, {})).open().then(function (){
-    	    loadActivities($scope, $http);
-        }) ;
+  		window.location.replace('./activityAdd.html', 'Add');
+    	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
+    	   // loadActivities($scope, $http);
+       // }) ;
   	};
   	
   	var editDialogOptions = {
 	    controller: 'EditActivityCtrl',
 	    templateUrl: './activityEdit.html',
 	};
-
   	$scope.edit = function(){
    	 	var activityToEdit = $scope.activity;
     	$dialog.dialog(angular.extend(editDialogOptions, {resolve: {v: angular.copy(activityToEdit)}})).
@@ -73,11 +71,9 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
   		//todo handle error
 	};
 });
-
 app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
   
 	$scope.activity = activity;
-
   	$scope.save = function($activity) {
   	    var putRequest = {
     	method : 'PUT',
@@ -96,53 +92,56 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
     	dialog.close();
   	};
 });
-
-
 app.controller('AddActivityCtrl', function($scope, $http, dialog){
   
   	$scope.save = function($activity) {
   		var postRequest = {
     	method : 'POST',
-       	url : 'http://localhost:8080/activity/' ,
+       	url : 'http://localhost:8080/activityAdd/' ,
        	data: {
   				text: $activity.text,
   				tags: $activity.tags,
   				title: $activity.title
 			  }
 		}  
+  		
+  		$scope.close = function() {
+  			window.location.replace('./activity.html', 'Activity');
+  		};
 		
   		$http(postRequest).then(function (response) {
   		    loadActivities($scope, $http);
   		}).then(function (){
   			dialog.close();
-  		})
+  		});
   		//todo handle error
-    	//dialog.close();
+    	
   	};
 });
-
 
 </script>
 </head>
 <body>
-	<div class="modal-header">
-	<h1>Add</h1>
-</div>
-<div class="modal-body">
-	<p>
-		Title <input ng-model="activity.title" size="40"/>
-	</p>
-	<p>
-		Text <input ng-model="activity.text" size="100"/>
-	</p>
-	<p>
-		Tags <input ng-model="activity.tags" size="40"/>
-	</p>
-	
-</div>
-<div class="modal-footer">
-	<button ng-click="save(activity)">Save</button>
-	<button ng-click="close()">Close</button>
+<div ng-controller="AddActivityCtrl">
+			<div class="modal-header">
+			<h1>Add</h1>
+			</div>
+			<div class="modal-body">
+			<p>
+				Title <input ng-model="activity.title" size="40"/>
+			</p>
+			<p>
+				Text <input ng-model="activity.text" size="100"/>
+			</p>
+			<p>
+				Tags <input ng-model="activity.tags" size="40"/>
+			</p>
+			
+		</div>
+		<div class="modal-footer">
+			<button class="mdl-button" ng-click="save(activity)">Save</button>
+			<button class="mdl-button" onclick="window.location.replace('index.html')">Close</button>
+		</div>
 </div>
 </body>
 </html>
