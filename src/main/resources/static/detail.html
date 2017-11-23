@@ -8,17 +8,33 @@
 <script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
+url = new URL(window.location.href);
+var postId = url.searchParams.get("id");
+
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
 
 function loadActivity($scope, $http, $activityId){
 	$http({
 		method: 'GET',
-		//url: 'activity/' + $activityId;
-		url: 'activity/1'
+		url: 'activity/' + postId
 	}).then(function (response) {
 		$scope.activities = response.data;
 	});
 }
+
+app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
+  	
+	loadActivity($scope, $http);
+	
+	var addDialogOptions = {
+    	controller: 'AddActivityCtrl',
+    	templateUrl: './activityAdd.html'
+  	};
+  	
+  	$scope.edit = function(){
+  		window.location.replace('./activityEdit.html?id=' + postId);
+  	};
+});
 
 
 </head>
@@ -32,12 +48,26 @@ function loadActivity($scope, $http, $activityId){
 	<div id="menu">
 		Hier kommt das Menü hin!!
 	</div>
-	<h3>{{activity.title}}</h3>
 	<div id="body">
-		<p>{{activity.creator}}</p>
-		<p>{{activity.date}}</p>
-		<p>{{activity.categorie}}</p>
-		<p>{{activity.text}}</p>
+		<h3>{{activity.title}}</h3>
+		<div class="item">
+			<div class="key">Verfasser:</div>
+			<div class="value">{{activity.creator}}</div>
+		</div>
+		<div class="item">
+			<div class="key">Datum:</div>
+			<div class="value">{{activity.date}}</div>
+		</div>
+		<div class="item">
+			<div class="key">Kategorie:</div>
+			<div class="value">{{activity.categorie}}</div>
+		</div>
+		<div class="item">
+			<div class="value">{{activity.text}}</div>
+		</div>
+		<div class="buttons">
+			<button ng-click="edit()">Bearbeiten</button>
+		</div>
 	</div>
 </div>
 </body>

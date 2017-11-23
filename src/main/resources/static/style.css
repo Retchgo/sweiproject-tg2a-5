@@ -41,22 +41,43 @@
 
 #menu {
 	width: 100%;
-	background-color: #f00;
+	background-color: #e0e0ff;
 	height: 40px;
 	float: left;
 }
-
-#content h3 {
+	
+#body {
+	width: 90%;
+	float: left;
+	padding: 10px 5%;
+}
+	
+#body h3 {
 	width: 100%;
 	float: left;
 	text-align: center;
 	font-size: 30px;
 	padding: 10px 0;
 }
-	
-#body {
-	width: 94%;
+
+#body .item {
+	width: 100%;
 	float: left;
-	padding: 10px 3%;
+	margin: 10px 0;
 }
-	
+
+#body .item .key {
+	width: 25%;
+	float: left;
+}
+
+#body .item .key {
+	width: auto;
+	float: left;
+}
+
+#body .buttons {
+	width: 100%;
+	float: left;
+	margin: 10px 0;
+}
