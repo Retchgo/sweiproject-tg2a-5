@@ -45,6 +45,12 @@
 	height: 40px;
 	float: left;
 }
+
+div#menu>div {
+	height: 40px;
+	float: left;
+	padding: 0 10px;
+}
 	
 #body {
 	width: 90%;

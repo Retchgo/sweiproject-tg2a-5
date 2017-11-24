@@ -13,18 +13,20 @@ var postId = url.searchParams.get("id");
 
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
 
-function loadActivity($scope, $http, $activityId){
+function loadActivity($scope, $http){
 	$http({
 		method: 'GET',
 		url: 'activity/' + postId
 	}).then(function (response) {
-		$scope.activities = response.data;
+		activity = response.data;
 	});
 }
 
 app.controller('MenuActivityCtrl', function ($scope, $http, $dialog) {
   	
-	
+	$scope.loadAdd = function() {
+		window.location.replace('./activityAdd.html);
+	}
 });
 
 app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
@@ -35,6 +37,7 @@ app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
   		window.location.replace('./activityEdit.html?id=' + postId);
   	};
 });
+</script>
 
 
 </head>
@@ -46,7 +49,7 @@ app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
 		<img src="images/Cal-Poly_Logo.jpeg" />
 	</div>
 	<div id="menu" ng-controller="MenuActivityCtrl">
-		Hier kommt das Menü hin!!
+		<div ng-click="loadAdd()">Add Activity</div>
 	</div>
 	<div id="body" ng-controller="DetailActivityCtrl">
 		<h3>{{activity.title}}</h3>
