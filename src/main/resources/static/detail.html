@@ -22,15 +22,15 @@ function loadActivity($scope, $http, $activityId){
 	});
 }
 
-app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
+app.controller('MenuActivityCtrl', function ($scope, $http, $dialog) {
+  	
+	
+});
+
+app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
   	
 	loadActivity($scope, $http);
-	
-	var addDialogOptions = {
-    	controller: 'AddActivityCtrl',
-    	templateUrl: './activityAdd.html'
-  	};
-  	
+	  	
   	$scope.edit = function(){
   		window.location.replace('./activityEdit.html?id=' + postId);
   	};
@@ -39,34 +39,34 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 
 </head>
 <body>
-<div id="content" ng-controller="ActivityCtrl">
+<div id="content">
 	<div id="head">
 		<img src="images/HM_Logo.jpeg" />
 		<h1>EduLife</h1>
 		<img src="images/Cal-Poly_Logo.jpeg" />
 	</div>
-	<div id="menu">
+	<div id="menu" ng-controller="MenuActivityCtrl">
 		Hier kommt das Menü hin!!
 	</div>
-	<div id="body">
+	<div id="body" ng-controller="DetailActivityCtrl">
 		<h3>{{activity.title}}</h3>
 		<div class="item">
-			<div class="key">Verfasser:</div>
+			<div class="key">Author:</div>
 			<div class="value">{{activity.creator}}</div>
 		</div>
 		<div class="item">
-			<div class="key">Datum:</div>
+			<div class="key">Date:</div>
 			<div class="value">{{activity.date}}</div>
 		</div>
 		<div class="item">
-			<div class="key">Kategorie:</div>
+			<div class="key">Categorie:</div>
 			<div class="value">{{activity.categorie}}</div>
 		</div>
 		<div class="item">
 			<div class="value">{{activity.text}}</div>
 		</div>
 		<div class="buttons">
-			<button ng-click="edit()">Bearbeiten</button>
+			<button ng-click="edit()">Edit</button>
 		</div>
 	</div>
 </div>
