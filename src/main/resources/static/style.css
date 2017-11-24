@@ -46,7 +46,9 @@ div#menu {
 	float: left;
 }
 
-div#menu>div {
+div#menu>a {
+	display: block;
+	text-decoration: none;
 	height: 20px;
 	float: left;
 	padding: 10px;
