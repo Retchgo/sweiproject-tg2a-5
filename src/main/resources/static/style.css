@@ -77,23 +77,31 @@ div#menu>div {
 }
 
 #body .item .key {
-	width: 25%;
+	width: 21%;
 	float: left;
 	color: #fff;
-	heigt: 100%;
+	heigt: auto;
 	background-color: #a0a0ff;
-	padding: 10px 0 10px 10px;
+	padding: 2% 0 2% 10px;
 }
 
 #body .item .value {
-	width: auto;
+	width: 71%;
 	float: left;
 	height: 100%;
-	padding: 10px 0 10px 10px;
+	padding: 2% 0 2% 10px;
 }
 
 #body .buttons {
 	width: 100%;
 	float: left;
 	margin: 10px 0;
+}
+
+#body .buttons>button {
+	float: right;
+	padding: 10px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #a0a0ff;
 }

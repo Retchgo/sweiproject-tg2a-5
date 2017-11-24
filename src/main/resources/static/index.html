@@ -66,14 +66,14 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
   		window.location.replace('./activityEdit.html');
   	};
 		
-	$scope.details = function($activity) {
+	/*$scope.details = function($activity) {
 		$http({
       		 method : 'GET',
             url: 'activity'
                    
    		}).then(function (response) {
     			 $scope.activities = response.data;
- 		});
+ 		});*/
 });
 app.controller('AddActivityCtrl', function($scope, $http, dialog){
   
