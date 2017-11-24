@@ -51,22 +51,22 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 	<div id="body">
 		<h3>{{activity.title}}</h3>
 		<div class="item">
-			<div class="key">Verfasser:</div>
+			<div class="key">Author:</div>
 			<div class="value">{{activity.creator}}</div>
 		</div>
 		<div class="item">
-			<div class="key">Datum:</div>
+			<div class="key">Date:</div>
 			<div class="value">{{activity.date}}</div>
 		</div>
 		<div class="item">
-			<div class="key">Kategorie:</div>
+			<div class="key">Categorie:</div>
 			<div class="value">{{activity.categorie}}</div>
 		</div>
 		<div class="item">
 			<div class="value">{{activity.text}}</div>
 		</div>
 		<div class="buttons">
-			<button ng-click="edit()">Bearbeiten</button>
+			<button ng-click="edit()">Edit</button>
 		</div>
 	</div>
 </div>
