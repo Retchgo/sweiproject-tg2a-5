@@ -51,9 +51,9 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
   	};
   	
   	$scope.add = function(){
-  		window.location.replace('./activityAdd.html', 'Add');
+  		window.location.replace('/activityAdd.html');
     	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
-    	   // loadActivities($scope, $http);
+    	//loadActivities($scope, $http);
        // }) ;
   	};
 
@@ -80,10 +80,11 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 		});
   		//todo handle error
 	};
+	
 });
 app.controller('AddActivityCtrl', function($scope, $http, dialog){
   
-  	$scope.save = function(Activity) {
+	  	$scope.save = function(Activity) {
   		var postRequest = {
     	method : 'POST',
        	url: 'activity' ,
@@ -102,7 +103,8 @@ app.controller('AddActivityCtrl', function($scope, $http, dialog){
   	};
   
   	$scope.close = function(){;
-    	dialog.close(undefined);
+  		window.location.reload('./index.html');
+    	//dialog.close(undefined);
   	};
 });
 app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
@@ -136,25 +138,27 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 </head>
 <body>
 <div ng-controller="AddActivityCtrl">
-			<div class="modal-header">
-			<h1>Add</h1>
-			</div>
-			<div class="modal-body">
-			<p>
-				Title <input ng-model="activity.title" size="40"/>
-			</p>
-			<p>
-				Text <input ng-model="activity.text" size="100"/>
-			</p>
-			<p>
-				Tags <input ng-model="activity.tags" size="40"/>
-			</p>
-			
-		</div>
-		<!--  <div class="modal-footer">-->
-			<button class="mdl-button" ng-click="save(activity)">Save</button>
-			<button class="mdl-button" onclick="window.location.replace('index.html')">Close</button>
-		<!-- </div>-->
+	<div class="modal-header">
+		<h1>Add</h1>
+	</div>
+	<div class="modal-body">
+		<p>
+			Title <input ng-model="activity.title" size="40"/>
+		</p>
+		<p>
+			Text <input ng-model="activity.text" size="100"/>
+		</p>
+		<p>
+			Tags <input ng-model="activity.tags" size="40"/>
+		</p>
+	
+	</div>
+	<!--  <div class="modal-footer">-->
+		<button class="mdl-button" ng-click="save(activity)">Save</button>
+		<button class="mdl-button" onclick="window.location.replace('index.html')">Close</button>
+	<!--
+	
+	</div>-->
 </div>
 </body>
 </html>
