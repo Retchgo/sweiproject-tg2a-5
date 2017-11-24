@@ -84,14 +84,14 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 });
 app.controller('AddActivityCtrl', function($scope, $http, $dialog){
   
-	  	$scope.save = function(Activity) {
+	  	$scope.save = function($activity) {
   		var postRequest = {
     	method : 'POST',
-       	url: 'activity' ,
+       	url: '/activity' ,
        	data: {
-  				text: $scope.activity.text,
-  				tags: $scope.activity.tags,
-  				title: $scope.activity.title
+  				text: $activity.text,
+  				tags: $activity.tags,
+  				title: $activity.title
 			  }
 		}  
 		
