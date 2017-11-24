@@ -10,32 +10,22 @@
 <script>
 url = new URL(window.location.href);
 var postId = url.searchParams.get("id");
-
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
 
-function loadActivity($scope, $http){
-	$http({
-		method: 'GET',
-		url: 'activity/' + postId
-	}).then(function (response) {
-		activity = response.data;
-	});
-}
+	function loadActivity ($scope, $http){
+		$http({
+       		 method : 'GET',
+       		 url : 'activity/' + postId
+    		}).then(function (response) {
+     			 $scope.activity = response.data;
+  		});
+  	}
 
-app.controller('MenuActivityCtrl', function ($scope, $http, $dialog) {
-  	
-	$scope.loadAdd = function() {
-		window.location.replace('./activityAdd.html);
-	}
-});
+
 
 app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
   	
 	loadActivity($scope, $http);
-	  	
-  	$scope.edit = function(){
-  		window.location.replace('./activityEdit.html?id=' + postId);
-  	};
 });
 </script>
 
@@ -48,22 +38,14 @@ app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
 		<h1>EduLife</h1>
 		<img src="images/Cal-Poly_Logo.jpeg" />
 	</div>
-	<div id="menu" ng-controller="MenuActivityCtrl">
+	<div id="menu">
 		<div ng-click="loadAdd()">Add Activity</div>
 	</div>
 	<div id="body" ng-controller="DetailActivityCtrl">
 		<h3>{{activity.title}}</h3>
 		<div class="item">
-			<div class="key">Author:</div>
-			<div class="value">{{activity.creator}}</div>
-		</div>
-		<div class="item">
-			<div class="key">Date:</div>
-			<div class="value">{{activity.date}}</div>
-		</div>
-		<div class="item">
-			<div class="key">Categorie:</div>
-			<div class="value">{{activity.categorie}}</div>
+			<div class="key">Tags:</div>
+			<div class="value">{{activity.tags}}</div>
 		</div>
 		<div class="item">
 			<div class="value">{{activity.text}}</div>
