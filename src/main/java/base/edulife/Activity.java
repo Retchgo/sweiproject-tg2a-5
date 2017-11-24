@@ -1,4 +1,4 @@
-package edulife;
+package base.edulife;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
