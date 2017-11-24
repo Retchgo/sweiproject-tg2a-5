@@ -82,7 +82,7 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 	};
 	
 });
-app.controller('AddActivityCtrl', function($scope, $http, dialog){
+app.controller('AddActivityCtrl', function($scope, $http, $dialog){
   
 	  	$scope.save = function(Activity) {
   		var postRequest = {
@@ -155,7 +155,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 	</div>
 	<!--  <div class="modal-footer">-->
 		<button class="mdl-button" ng-click="save(activity)">Save</button>
-		<button class="mdl-button" onclick="window.location.replace('index.html')">Close</button>
+		<button class="mdl-button" ng-click="close()">Close</button>
 	<!--
 	
 	</div>-->
