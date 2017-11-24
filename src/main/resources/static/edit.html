@@ -42,15 +42,15 @@ app.controller('editActivityCtrl', function ($scope, $http, $dialog) {
 	<div id="body" ng-controller="EditActivityCtrl">
 		<div class="item">
 			<div class="key">Title:</div>
-			<input ng-model="activity.title" size="40" value=activity.title />
+			<input ng-model="activity.title" size="40" ng-init="rootFolders='{{activity.title}}'" />
 		</div>
 		<div class="item">
 			<div class="key">Tags:</div>
-			<input ng-model="activity.title" size="40" ng-init={{activity.title}} />
+			<input ng-model="activity.tags" size="40" ng-init={{activity.title}} />
 		</div>
 		<div class="item">
 			<div class="key">Text:</div>
-			<input ng-model="activity.title" size="40" ng-init="rootFolders='activity.title' " value=activity.title/>
+			<input ng-model="activity.text" size="40" value={{activity.title}} />
 		</div>
 		
 	<div class="buttons">
