@@ -39,21 +39,21 @@ app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
 		<img src="images/Cal-Poly_Logo.jpeg" />
 	</div>
 	<div id="menu">
-		<a href="./index.html">Index</a>
+		<a href="./index.html">Home</a>
 		<a href="./activityAdd.html">Add Activity</a>
 	</div>
 	<div id="body" ng-controller="DetailActivityCtrl">
 		<h3>{{activity.title}}</h3>
 		<div class="item">
-			<div class="key">Tags:</div>
-			<div class="value">{{activity.tags}}</div>
-		</div>
-		<div class="item">
 			<div class="key">Text:</div>
 			<div class="value">{{activity.text}}</div>
 		</div>
+		<div class="item">
+			<div class="key">Tags:</div>
+			<div class="value">{{activity.tags}}</div>
+		</div>
 		<div class="buttons">
-			<button ng-click="edit()">Edit & Delete</button>
+			<a href='./activityEdit.html?id="{{activity.id}}"'>Edit & Delete</a>
 		</div>
 	</div>
 </div>
