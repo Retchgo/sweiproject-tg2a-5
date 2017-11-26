@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Activity about the partnership between 
+ * Munich university of applied science and Carl Poly university.
+ */
 @Entity
 public class Activity {
 

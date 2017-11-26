@@ -109,7 +109,7 @@ div#menu>a {
 	margin: 20px 0;
 }
 
-#body .buttons>a {
+#body .buttons>a, #body .buttons>button {
 	display: block;
 	text-decoration: none;
 	color: #000;
@@ -118,4 +118,5 @@ div#menu>a {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #a0a0ff;
+	margin-left: 20px;
 }
