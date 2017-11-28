@@ -125,7 +125,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 <h1>EduLife</h1>
 <img src="images/Cal-Poly_Logo.jpeg" /></div>
 
-<div id="menu"><a href="./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a></div>
+<div id="menu"><a href="./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a> <a href="./detail.html">Show Post Details</a></div>
 
 <div id="body" ng-controller="AddActivityCtrl">
 <h3>Add Activity</h3>
@@ -135,6 +135,20 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 
 <div class="value"><textarea cols="60" ng-model="activity.title" rows="1"></textarea></div>
 </div>
+
+<div class="item">
+<div class="key">Text:</div>
+
+<div class="value"><textarea cols="60" ng-model="activity.text" rows="1"></textarea></div>
+</div>
+
+<div class="item">
+<div class="key">Tags:</div>
+
+<div class="value"><textarea cols="60" ng-model="activity.tags" rows="1"></textarea></div>
+</div>
+
+<div class="buttons"><button ng-click="save(activity)">Save</button><button ng-click="close()">Close</button></div>
 </div>
 </div>
 </body>
