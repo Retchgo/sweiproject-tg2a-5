@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html ng-app="ActivityMeterApp">
 <head>
-	<meta charset="utf-8" />
-	<title>Activity Details</title>
-	<link href="style.css" rel="stylesheet" type="text/css" /><script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script><script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
-	<meta content="width=device-width, initial-scale=1.0" name="viewport" /><script>
-
+<meta charset="utf-8">
+<title>Activity Details</title>
+<link rel="stylesheet" type= "text/css" href="style.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
     
 function loadActivities ($scope, $http){
@@ -39,7 +41,6 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
     	//loadActivities($scope, $http);
        // }) ;
   	};
-
   	
   	var editDialogOptions = {
 	    controller: 'EditActivityCtrl',
@@ -96,7 +97,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
   	$scope.save = function($activity) {
   	    var putRequest = {
     	method : 'PUT',
-       	url: 'activity/' + $scope.activity.id,&nbsp;
+       	url: 'activity/' + $scope.activity.id,
        	data: {
   				text: $scope.activity.text,
   				tags: $scope.activity.tags,
@@ -118,38 +119,38 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
   	};
 });
 </script>
+
 </head>
 <body>
 <div id="content">
-<div id="head"><img src="images/HM_Logo.jpeg" />
-<h1>EduLife</h1>
-<img src="images/Cal-Poly_Logo.jpeg" /></div>
+	<div id="head">
+		<img src="images/HM_Logo.jpeg" />
+		<h1>EduLife</h1>
+		<img src="images/Cal-Poly_Logo.jpeg" />
+	</div>
+	<div id="menu"><a href="./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a><a href ="./detail.html">Show Post Details</a></div>
+	</div>
+	<div id="body" ng-controller="AddActivityCtrl">
+		<h3>Add Activity</h3>
+		
+		<div class="item">
+		<div class="key">Title:</div>
+			<div class="value"><textarea ng-model="activity.title" rows="1" cols="60"></textarea></div>
+		</div>
+		<div class="item">
+		<div class="key">Text:</div>
+		<div class="value"><textarea ng-model="activity.text" rows="1" cols="60"></textarea></div>
+		</div>
+		<div class="item">
+		<div class="key">Tags:</div>
+		<div class="value"><textarea ng-model="activity.tags" rows="1" cols="60"></textarea></div>
+		</div>
 
-<div id="menu"><a href="./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a> <a href="./detail.html">Show Post Details</a></div>
-
-<div id="body" ng-controller="AddActivityCtrl">
-<h3>Add Activity</h3>
-
-<div class="item">
-<div class="key">Title:</div>
-
-<div class="value"><textarea cols="60" ng-model="activity.title" rows="1"></textarea></div>
-</div>
-
-<div class="item">
-<div class="key">Text:</div>
-
-<div class="value"><textarea cols="60" ng-model="activity.text" rows="1"></textarea></div>
-</div>
-
-<div class="item">
-<div class="key">Tags:</div>
-
-<div class="value"><textarea cols="60" ng-model="activity.tags" rows="1"></textarea></div>
-</div>
-
-<div class="buttons"><button ng-click="save(activity)">Save</button><button ng-click="close()">Close</button></div>
-</div>
+		<div class="buttons">
+			<button ng-click="save(activity)">Save</button>
+			<button ng-click="close()">Close</button>
+		</div>
+	</div>
 </div>
 </body>
 </html>
