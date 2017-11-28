@@ -1,5 +1,8 @@
 package base.edulife;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +18,10 @@ public class Activity {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    private String title;
     private String text;
     private String tags;
-    private String title;
+    private Date creationDate = new Date();
 
     public Activity (){};
 
@@ -35,6 +39,14 @@ public class Activity {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getText() {
         return text;
     }
@@ -50,12 +62,8 @@ public class Activity {
     public void setTags(String tags) {
       this.tags = tags;
     }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    
+    public String getCreationDate() {
+    	return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.creationDate);
     }
 }

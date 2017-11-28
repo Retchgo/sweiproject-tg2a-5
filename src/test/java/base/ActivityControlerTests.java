@@ -7,6 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,9 +39,11 @@ public class ActivityControlerTests {
 	
 	@Test
 	public void Test2_createActivity() throws Exception {
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
 			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
 			andExpect(status().isOk()).andExpect(content().
-			json("{ \"id\": 1, \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}" ));
+			json("{ \"id\": 1, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime + 
+					"\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}" ));
 	}
 }
