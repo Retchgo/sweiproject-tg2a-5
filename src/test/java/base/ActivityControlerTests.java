@@ -56,10 +56,10 @@ public class ActivityControlerTests {
 		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
 			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
 			andExpect(status().isOk()).andExpect(content().
-			json("{ \"id\": 1, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime + 
+			json("{ \"id\": 2, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime + 
 			"\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}" ));
 		
 		this.mockMvc.perform(delete("/activity").contentType(MediaType.APPLICATION_JSON)
-			.content("{ \"id\": 1}")).andExpect(content().json("[]"));
+			.content("{ \"id\": 2}")).andExpect(content().json("[]"));
 	}
 }
