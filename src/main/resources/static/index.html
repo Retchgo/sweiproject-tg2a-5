@@ -133,17 +133,17 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
 	<div id = "content">
-	<div id="head">
-	<img src="images/HM_Logo.jpeg" />
+	<div id ="head">
+	<img src = "images/HM_Logo.jpeg" />
 	<h1>EduLife</h1>
-	<img src="images/Cal-Poly_Logo.jpeg" />
+	<img src = "images/Cal-Poly_Logo.jpeg" />
 	</div>
 
-	<div id="menu">
-		<a href="./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a>
+	<div id = "menu">
+		<a href = "./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a>
 	</div>
 
-	<div ng-controller="ActivityCtrl">
+	<div id = "body" ng-controller="ActivityCtrl">
 		<h3>Activities:</h3>
 
 		<table class="mdl-data-table">
@@ -155,13 +155,13 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 				<td class="mdl-data-table__cell--non-numeric">{{activity.title}}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{activity.text}}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{activity.tags}}</td>
-				<td class="mdl-data-table__cell--non-numeric"><button
-						class="mdl-button" ng-click="edit(activity)">edit</button>
-					<button class="mdl-button" ng-click="detail(activity)">open</button></td>
-					
+				<td class="mdl-data-table__cell--non-numeric">
+					<button	class="mdl-button" ng-click="edit(activity)">edit</button>
+					<button class="mdl-button" ng-click="detail(activity)">show details</button></td>
+
 			</tr>
 		</table>
 	</div>
-</div> 
+</div>
 </body>
 </html>
