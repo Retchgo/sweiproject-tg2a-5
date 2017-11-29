@@ -66,6 +66,20 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
   		window.location.replace('./activityEdit.html');
   	};
 
+
+
+			$scope.detail = function(activity){
+				var id = activity.id;
+				window.location.replace('./detail.html?id='+id, 'Details anzeigen');
+			};
+
+/*
+		$scope.detail = function(activity){
+			window.location.replace('./detail.html?id=1', 'Details anzeigen');
+		};
+*/
+
+
 	/*$scope.details = function($activity) {
 		$http({
       		 method : 'GET',
@@ -75,6 +89,11 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
     			 $scope.activities = response.data;
  		});*/
 });
+
+
+
+
+
 app.controller('AddActivityCtrl', function($scope, $http, dialog){
 
   	$scope.save = function(Activity) {
@@ -157,7 +176,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 				<td class="mdl-data-table__cell--non-numeric">{{activity.tags}}</td>
 				<td class="mdl-data-table__cell--non-numeric">
 					<button	class="mdl-button" ng-click="edit(activity)">edit</button>
-					<button class="mdl-button" ng-click="detail(activity)">show details</button></td>
+					<button class="mdl-button" ng-click="detail(activity)">Details anzeigen</button></td>
 
 			</tr>
 		</table>
