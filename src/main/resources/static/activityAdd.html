@@ -2,7 +2,7 @@
 <html ng-app="ActivityMeterApp">
 <head>
 <meta charset="utf-8">
-<title>Activity Details</title>
+<title>Activity Add</title>
 <link rel="stylesheet" type= "text/css" href="style.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
@@ -69,6 +69,7 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 app.controller('AddActivityCtrl', function($scope, $http, $dialog){
   
 	  	$scope.save = function($activity) {
+	  		console.log("SAVE");
   		var postRequest = {
     	method : 'POST',
        	url: '/activity' ,
@@ -139,11 +140,11 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 		</div>
 		<div class="item">
 		<div class="key">Text:</div>
-		<div class="value"><textarea ng-model="activity.text" rows="1" cols="60"></textarea></div>
+			<div class="value"><textarea ng-model="activity.text" rows="1" cols="60"></textarea></div>
 		</div>
 		<div class="item">
 		<div class="key">Tags:</div>
-		<div class="value"><textarea ng-model="activity.tags" rows="1" cols="60"></textarea></div>
+			<div class="value"><textarea ng-model="activity.tags" rows="1" cols="60"></textarea></div>
 		</div>
 
 		<div class="buttons">

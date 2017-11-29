@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html ng-app="ActivityMeterApp">
+<head>
+<meta charset="utf-8">
+<title>Activity Edit</title>
+<link rel="stylesheet" type= "text/css" href="style.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+// Read ID to know of which post the details should be shown.
+url = new URL(window.location.href);
+var postId = url.searchParams.get("id");
+if (postId == null) {
+	alert("The activity is not specified. Please contact the administrative!");
+	window.location.replace('./index.html');
+}
+
+var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
+
+// Get data for the activity from the Rest-API
+function loadActivity ($scope, $http){
+	$http({
+		method : 'GET',
+   		url : 'activity/' + postId
+	}).then(function (response) {
+		if (response.status != 200 || response.data.id == undefined) {
+			alert("The activity you look for is not available!");
+			window.location.replace('./index.html');
+		}
+		else {
+			$scope.activity = response.data;
+		}
+	});
+}
+
+// Controller for the details-page
+app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
+  	
+	loadActivity($scope, $http);
+	
+	var addDialogOptions = {
+	    	controller: 'EditActivityCtrl',
+	    	templateUrl: './activityAdd.html'
+	  	};
+	  	
+	  	$scope.edit = function(){
+	  		var putRequest = {
+	  		    	method : 'PUT',
+	  		       	url: 'activity/' + $scope.activity.id,
+	  		       	data: {
+	  		  				text: $scope.activity.text,
+	  		  				tags: $scope.activity.tags,
+	  		  				title: $scope.activity.title
+	  					  }
+	  				}  
+	  				
+	  		  		$http(putRequest).then(function (response) {
+	  		  		    $scope.activities = response.data;
+	  		  		}).then(function () {
+	  					//todo handle error
+	  					$scope.close();
+	  				});
+	  		
+	  		window.location.replace('/index.html');
+	    	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
+	    	//loadActivities($scope, $http);
+	       // }) ;
+	  	};
+	  	
+	  	$scope.deleteActivity = function(){
+	  		var deleteRequest = {
+	  		    	method : 'DELETE',
+	  		       	url: 'activity/' + $scope.activity.id,
+	  		      	data: {
+		  				
+					  }
+				}
+	  		  		$http(deleteRequest).then(function (res) {
+	  		  		   console.log("DELETED: " + res)
+	  		  		}).then(function () {
+	  					//todo handle error
+	  					$scope.close();
+	  				});
+	  		
+	  		window.location.replace('/index.html');
+	    	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
+	    	//loadActivities($scope, $http);
+	       // }) ;
+	  	};
+});
+</script>
+
+
+</head>
+<body>
+<div id="content">
+	<div id="head">
+		<img src="images/HM_Logo.jpeg" />
+		<h1>EduLife</h1>
+		<img src="images/Cal-Poly_Logo.jpeg" />
+	</div>
+	<div id="menu">
+		<a href="./index.html">Home</a>
+		<a href="./activityAdd.html">Add Activity</a>
+	</div>
+	<div id="body" ng-controller="EditActivityCtrl">
+		<div class="item">
+			<div class="key">Title:</div>
+			<div class="value"><textarea ng-model="activity.title" rows="1" cols="60"></textarea></div>
+		</div>
+		<div class="item">
+			<div class="key">Text:</div>
+			<div class="value"><textarea ng-model="activity.text" rows="1" cols="60"></textarea></div>
+		</div>
+		<div class="item""src/main/java/base/Application.java">
+			<div class="key">Tags:</div>
+			<div class="value"><textarea ng-model="activity.tags" rows="1" cols="60"></textarea></div>
+		</div>
+		<div class="buttons">
+			<button ng-click="edit()">Save</button>
+			<button ng-click="deleteActivity()">Delete</button>
+			<button ng-click="close()">Close</button>
+		</div>
+	</div>
+</div>
+</body>
+</html>

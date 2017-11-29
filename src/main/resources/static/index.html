@@ -63,7 +63,7 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 	    templateUrl: './activityEdit.html',
 	};
   	$scope.edit = function(activity){
-  		window.location.replace('./activityEdit.html');
+  		window.location.replace('./activityEdit.html?id=' + activity.id, 'Edit');
   	};
 		
 	/*$scope.details = function($activity) {
