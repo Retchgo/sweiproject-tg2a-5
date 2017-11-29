@@ -8,7 +8,6 @@
 <script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
-
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
     
 function loadActivities ($scope, $http){
@@ -42,7 +41,6 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
     	//loadActivities($scope, $http);
        // }) ;
   	};
-
   	
   	var editDialogOptions = {
 	    controller: 'EditActivityCtrl',
@@ -130,7 +128,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 		<h1>EduLife</h1>
 		<img src="images/Cal-Poly_Logo.jpeg" />
 	</div>
-	<div id="menu">
+	<div id="menu"><a href="./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a><a href ="./detail.html">Show Post Details</a></div>
 	</div>
 	<div id="body" ng-controller="AddActivityCtrl">
 		<h3>Add Activity</h3>
