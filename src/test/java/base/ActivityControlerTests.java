@@ -42,7 +42,7 @@ public class ActivityControlerTests {
 	
 	@Test
 	public void Test2_createActivity() throws Exception {
-		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
 			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
 			andExpect(status().isOk()).andExpect(content().
@@ -57,7 +57,7 @@ public class ActivityControlerTests {
 	
 	@Test
 	public void Test4_createAndDeleteActivity() throws Exception {
-		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
 			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
 			andExpect(status().isOk()).andExpect(content().
@@ -69,14 +69,14 @@ public class ActivityControlerTests {
 	
 	@Test
 	public void Test5_editActivity() throws Exception {
-		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
 			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
 			andExpect(status().isOk()).andExpect(content().
 			json("{ \"id\": 3, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime + 
 					"\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}" ));
 		
-		String newcurrentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		String newcurrentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 		this.mockMvc.perform(put("/activity/3").contentType(MediaType.APPLICATION_JSON)
 			.content("{ \"title\": \"Testactivity2\", \"text\": \"Test zur Erstellung einer zweiten Activity\", \"tags\": \"#test #probieren #zwei\"}"))
 		    .andExpect(status().isOk()).andExpect(content().json("{ \"id\": 3, \"title\": \"Testactivity2\", \"creationDate\": \"" + newcurrentTime + 
