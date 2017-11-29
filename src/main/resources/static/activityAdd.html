@@ -36,7 +36,7 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
   	};
 
   	$scope.add = function(){
-  		window.location.replace('/activityAdd.html');
+  		window.location.href = '/activityAdd.html';
     	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
     	//loadActivities($scope, $http);
        // }) ;
@@ -87,7 +87,7 @@ app.controller('AddActivityCtrl', function($scope, $http, $dialog){
   	};
 
   	$scope.close = function(){;
-  		window.location.replace('./index.html');
+  		window.location.href = './index.html';
     	//dialog.close(undefined);
   	};
 });
@@ -129,22 +129,22 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 		<img src="images/Cal-Poly_Logo.jpeg" />
 	</div>
 	<div id="menu">
-    <a href="./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a></div>
+    	<a href="./index.html">Home</a> 
+    	<a href="./activityAdd.html">Add Activity</a>
 	</div>
 	<div id = "body" ng-controller="AddActivityCtrl">
 		<h3>Add Activity</h3>
-<div id = "content">
 		<div class="item">
 		<div class="key">Title:</div>
-			<div class="value"><textarea ng-model="activity.title" rows="1" cols="60"></textarea></div>
+			<div class="value"><input ng-model="activity.title" rows="1" cols="60"></div>
 		</div>
 		<div class="item">
 		<div class="key">Text:</div>
-		<div class="value"><textarea ng-model="activity.text" rows="1" cols="60"></textarea></div>
+		<div class="value"><textarea class="large" ng-model="activity.text"></textarea></div>
 		</div>
 		<div class="item">
 		<div class="key">Tags:</div>
-		<div class="value"><textarea ng-model="activity.tags" rows="1" cols="60"></textarea></div>
+		<div class="value"><textarea class="small" ng-model="activity.tags"></textarea></div>
 		</div>
 
 		<div class="buttons">

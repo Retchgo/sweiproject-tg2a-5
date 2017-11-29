@@ -6,6 +6,8 @@
 <link rel="stylesheet" type= "text/css" href="style.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
+<!--<script src="/angular/angular.min.js"></script>
+<script src="/angular/ui-bootstrap-tpls-0.1.0.js"></script>-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 // Read ID to know of which post the details should be shown.
@@ -13,7 +15,7 @@ url = new URL(window.location.href);
 var postId = url.searchParams.get("id");
 if (postId == null) {
 	alert("The activity is not specified. Please contact the administrative!");
-	window.location.replace('./index.html');
+	window.location.href = '/index.html';
 }
 
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
@@ -26,7 +28,7 @@ function loadActivity ($scope, $http){
 	}).then(function (response) {
 		if (response.status != 200 || response.data.id == undefined) {
 			alert("The activity you look for is not available!");
-			window.location.replace('./index.html');
+			window.location.href = '/index.html';
 		}
 		else {
 			$scope.activity = response.data;
@@ -61,12 +63,12 @@ app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
 			<div class="value">{{activity.text}}&nbsp;</div>
 		</div>
 		<div class="item">
-			<div class="key">Creation Date:</div>
-			<div class="value">{{activity.creationDate}}&nbsp;</div>
-		</div>
-		<div class="item">
 			<div class="key">Tags:</div>
 			<div class="value">{{activity.tags}}&nbsp;</div>
+		</div>
+		<div class="item">
+			<div class="key">Creation Date:</div>
+			<div class="value">{{activity.creationDate}}&nbsp;</div>
 		</div>
 		<div class="buttons">
 			<a href='./activityEdit.html?id="{{activity.id}}"'>Edit & Delete</a>

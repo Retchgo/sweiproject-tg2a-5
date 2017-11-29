@@ -51,7 +51,7 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
   	};
 
   	$scope.add = function(){
-  		window.location.replace('./activityAdd.html', 'Add');
+  		window.location.href ='./activityAdd.html';
     	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
     	   // loadActivities($scope, $http);
        // }) ;
@@ -63,14 +63,14 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 	    templateUrl: './activityEdit.html',
 	};
   	$scope.edit = function(activity){
-  		window.location.replace('./activityEdit.html');
+  		window.location.href = './activityEdit.html';
   	};
 
 
 
 			$scope.detail = function(activity){
 				var id = activity.id;
-				window.location.replace('./detail.html?id='+id, 'Details anzeigen');
+				window.location.href = './detail.html?id='+id;
 			};
 
 /*
