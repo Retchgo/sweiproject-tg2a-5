@@ -35,13 +35,13 @@ public class ActivityControlerTests {
 	private MockMvc mockMvc;
 	
 	@Test
-	public void Test1_noActivitys() throws Exception {
+	public void Test01_noActivitys() throws Exception {
 		this.mockMvc.perform(get("/activity")).andDo(print())
 			.andExpect(status().isOk()).andExpect(content().json("[]"));
 	}
 	
 	@Test
-	public void Test2_createActivity() throws Exception {
+	public void Test02_createActivity() throws Exception {
 		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
 			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
@@ -51,12 +51,12 @@ public class ActivityControlerTests {
 	}
 	
 	@Test
-	public void Test3_deleteActivity() throws Exception {
+	public void Test03_deleteActivity() throws Exception {
 		this.mockMvc.perform(delete("/activity/1")).andExpect(status().isOk());
 	}
 	
 	@Test
-	public void Test4_createAndDeleteActivity() throws Exception {
+	public void Test04_createAndDeleteActivity() throws Exception {
 		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
 			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
@@ -68,7 +68,7 @@ public class ActivityControlerTests {
 	}
 	
 	@Test
-	public void Test5_editActivity() throws Exception {
+	public void Test05_editActivity() throws Exception {
 		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
 			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
@@ -82,5 +82,59 @@ public class ActivityControlerTests {
 		    .andExpect(status().isOk()).andExpect(content().json("{ \"id\": 3, \"title\": \"Testactivity2\", \"creationDate\": \"" + newcurrentTime + 
 					"\", \"text\": \"Test zur Erstellung einer zweiten Activity\", \"tags\": \"#test #probieren #zwei\"}"));
 			
+	}
+	
+	@Test
+	public void Test06_createActivityToHaveMoreThanOne() throws Exception {
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
+				content("{ \"title\": \"Activity 2\", \"text\": \"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#2 #weitere\"}")).
+				andExpect(status().isOk()).andExpect(content().
+				json("{ \"id\": 4, \"title\": \"Activity 2\", \"creationDate\": \"" + currentTime + 
+						"\", \"text\": \"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#2 #weitere\"}" ));
+		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
+				content("{ \"title\": \"Activity 3\", \"text\": \"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#3 #weitere\"}")).
+				andExpect(status().isOk()).andExpect(content().
+				json("{ \"id\": 5, \"title\": \"Activity 3\", \"creationDate\": \"" + currentTime + 
+						"\", \"text\": \"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#3 #weitere\"}" ));
+	}
+	
+	@Test
+	public void Test07_getAllActivities() throws Exception {
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+		this.mockMvc.perform(get("/activity")).andExpect(status().isOk()).andExpect(content().
+				json("[{ \"id\": 3, \"title\": \"Testactivity2\", \"creationDate\": \"" + currentTime + 
+					"\", \"text\": \"Test zur Erstellung einer zweiten Activity\", \"tags\": \"#test #probieren #zwei\"}," +
+					"{ \"id\": 4, \"title\": \"Activity 2\", \"creationDate\": \"" + currentTime + 
+					"\", \"text\": \"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#2 #weitere\"}," +
+					"{ \"id\": 5, \"title\": \"Activity 3\", \"creationDate\": \"" + currentTime + 
+					"\", \"text\": \"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#3 #weitere\"}]"));
+	}
+	
+	@Test
+	public void Test08_getOneActivity() throws Exception {
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+		this.mockMvc.perform(get("/activity/4")).andExpect(status().isOk()).andExpect(content().
+				json("{ \"id\": 4, \"title\": \"Activity 2\", \"creationDate\": \"" + currentTime + 
+					"\", \"text\": \"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#2 #weitere\"}"));
+	}
+	
+	@Test
+	public void Test09_deleteNoneExistingActivity() throws Exception {
+		this.mockMvc.perform(delete("/activity/10")).andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void Test10_editNotExistingActivity() throws Exception {
+		this.mockMvc.perform(put("/activity/1").contentType(MediaType.APPLICATION_JSON)
+			.content("{ \"title\": \"Testactivity2\", \"text\": \"Test zur Erstellung einer zweiten Activity\", \"tags\": \"#test #probieren #zwei\"}"))
+			.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void Test11_createInvalidActivity() throws Exception {
+		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
+			content("{ \"irgendwas\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
+			andExpect(status().isBadRequest());
 	}
 }
