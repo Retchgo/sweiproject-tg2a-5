@@ -2,6 +2,9 @@ package base;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -45,5 +48,39 @@ public class ActivityControlerTests {
 			andExpect(status().isOk()).andExpect(content().
 			json("{ \"id\": 1, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime + 
 					"\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}" ));
+	}
+	
+	@Test
+	public void Test3_deleteActivity() throws Exception {
+		this.mockMvc.perform(delete("/activity/1")).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void Test4_createAndDeleteActivity() throws Exception {
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
+			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
+			andExpect(status().isOk()).andExpect(content().
+			json("{ \"id\": 2, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime + 
+					"\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}" ));
+		
+		this.mockMvc.perform(delete("/activity/2")).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void Test5_editActivity() throws Exception {
+		String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON).
+			content("{ \"title\": \"Testactivity\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}")).
+			andExpect(status().isOk()).andExpect(content().
+			json("{ \"id\": 3, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime + 
+					"\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}" ));
+		
+		String newcurrentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		this.mockMvc.perform(put("/activity/3").contentType(MediaType.APPLICATION_JSON)
+			.content("{ \"title\": \"Testactivity2\", \"text\": \"Test zur Erstellung einer zweiten Activity\", \"tags\": \"#test #probieren #zwei\"}"))
+		    .andExpect(status().isOk()).andExpect(content().json("{ \"id\": 3, \"title\": \"Testactivity2\", \"creationDate\": \"" + newcurrentTime + 
+					"\", \"text\": \"Test zur Erstellung einer zweiten Activity\", \"tags\": \"#test #probieren #zwei\"}"));
+			
 	}
 }
