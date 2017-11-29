@@ -2,14 +2,14 @@
 <html ng-app="ActivityMeterApp">
 <head>
 <meta charset="utf-8">
-<title>Activity Add</title>
+<title>Activity Details</title>
 <link rel="stylesheet" type= "text/css" href="style.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
-    
+
 function loadActivities ($scope, $http){
 		$http({
        		 method : 'GET',
@@ -19,29 +19,29 @@ function loadActivities ($scope, $http){
                     'https://activityexample.herokuapp.com/activity')
              */
              url: 'activity'
-                    
+
     		}).then(function (response) {
      			 $scope.activities = response.data;
   		});
   	}
-  	
+
 app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
-  	
+
   	loadActivities($scope, $http);
-  
-		  
+
+
   	var addDialogOptions = {
     	controller: 'AddActivityCtrl',
     	templateUrl: './activityAdd.html'
   	};
-  	
+
   	$scope.add = function(){
-  		window.location.replace('/activityAdd.html');
+  		window.location.href = '/activityAdd.html';
     	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
     	//loadActivities($scope, $http);
        // }) ;
   	};
-  	
+
   	var editDialogOptions = {
 	    controller: 'EditActivityCtrl',
 	    templateUrl: './activityEdit.html',
@@ -52,24 +52,23 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
     	    loadActivities($scope, $http);
         }) ;
   	};
-		
+
 	$scope.delete = function(activity) {
 		var deleteRequest = {
 			method : 'DELETE',
 			url: 'activity/' + activity.id
 		};
-		
+
   		$http(deleteRequest).then(function() {
 			loadActivities($scope, $http);
 		});
   		//todo handle error
 	};
-	
+
 });
 app.controller('AddActivityCtrl', function($scope, $http, $dialog){
-  
+
 	  	$scope.save = function($activity) {
-	  		console.log("SAVE");
   		var postRequest = {
     	method : 'POST',
        	url: '/activity' ,
@@ -78,22 +77,22 @@ app.controller('AddActivityCtrl', function($scope, $http, $dialog){
   				tags: $activity.tags,
   				title: $activity.title
 			  }
-		}  
-		
+		}
+
   		$http(postRequest).then(function (response) {
   		    $scope.activities = response.data;
   		}).then(function () {
   			$scope.close();
   		});
   	};
-  
+
   	$scope.close = function(){;
-  		window.location.replace('./index.html');
+  		window.location.href = './index.html';
     	//dialog.close(undefined);
   	};
 });
 app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
-  
+
 	$scope.activity = activity;
   	$scope.save = function($activity) {
   	    var putRequest = {
@@ -104,8 +103,8 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
   				tags: $scope.activity.tags,
   				title: $scope.activity.title
 			  }
-		}  
-		
+		}
+
   		$http(putRequest).then(function (response) {
   		    $scope.activities = response.data;
   		}).then(function () {
@@ -113,14 +112,14 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 			$scope.close();
 		});
   	};
-  
+
   	$scope.close = function(){
   		loadActivities($scope, $http);
     	dialog.close();
   	};
 });
 </script>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div id="content">
@@ -129,29 +128,30 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 		<h1>EduLife</h1>
 		<img src="images/Cal-Poly_Logo.jpeg" />
 	</div>
-	<div id="menu"><a href="./index.html">Home</a> <a href="./activityAdd.html">Add Activity</a><a href ="./detail.html">Show Post Details</a></div>
+	<div id="menu">
+    	<a href="./index.html">Home</a> 
+    	<a href="./activityAdd.html">Add Activity</a>
 	</div>
-	<div id="body" ng-controller="AddActivityCtrl">
+	<div id = "body" ng-controller="AddActivityCtrl">
 		<h3>Add Activity</h3>
-		
 		<div class="item">
 		<div class="key">Title:</div>
-			<div class="value"><textarea ng-model="activity.title" rows="1" cols="60"></textarea></div>
+			<div class="value"><input ng-model="activity.title" rows="1" cols="60"></div>
 		</div>
 		<div class="item">
 		<div class="key">Text:</div>
-			<div class="value"><textarea ng-model="activity.text" rows="1" cols="60"></textarea></div>
+		<div class="value"><textarea class="large" ng-model="activity.text"></textarea></div>
 		</div>
 		<div class="item">
 		<div class="key">Tags:</div>
-			<div class="value"><textarea ng-model="activity.tags" rows="1" cols="60"></textarea></div>
+		<div class="value"><textarea class="small" ng-model="activity.tags"></textarea></div>
 		</div>
 
 		<div class="buttons">
 			<button ng-click="save(activity)">Save</button>
 			<button ng-click="close()">Close</button>
 		</div>
-	</div>
+</div>
 </div>
 </body>
 </html>

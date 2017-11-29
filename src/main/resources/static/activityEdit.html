@@ -72,12 +72,10 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 	  		var deleteRequest = {
 	  		    	method : 'DELETE',
 	  		       	url: 'activity/' + $scope.activity.id,
-	  		      	data: {
-		  				
-					  }
+	  		      	data: {}
 				}
 	  		  		$http(deleteRequest).then(function (res) {
-	  		  		   console.log("DELETED: " + res)
+	  		  		  
 	  		  		}).then(function () {
 	  					//todo handle error
 	  					$scope.close();

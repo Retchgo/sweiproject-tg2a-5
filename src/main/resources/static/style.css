@@ -101,6 +101,7 @@ div#menu>a {
 	height: 100%;
 	background-color: #fff;
 	padding: 10px 2%;
+	overflow-x: auto;
 }
 
 #body .buttons {
@@ -119,4 +120,21 @@ div#menu>a {
 	border-style: solid;
 	border-color: #a0a0ff;
 	margin-left: 20px;
+}
+
+input {
+	width: 100%;
+}
+
+textarea {
+	width: 100%;
+	resize: vertical;
+}
+
+textarea.small {
+	height: 80px;
+}
+
+textarea.large {
+	height: 160px;
 }
