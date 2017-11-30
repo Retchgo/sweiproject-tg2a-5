@@ -3,27 +3,25 @@
 <head>
 <meta charset="utf-8">
 <title>Activity Details</title>
-<link rel="stylesheet" type="text/css" href="style.css" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script
-	src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
+<link rel="stylesheet" type= "text/css" href="style.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
+<!--<script src="/angular/angular.min.js"></script>
+<script src="/angular/ui-bootstrap-tpls-0.1.0.js"></script>-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
-	// Read ID to know of which post the details should be shown.
-	url = new URL(window.location.href);
-	var postId = url.searchParams.get("id");
-	if (postId == null) {
-		alert("The activity is not specified. Please contact the administrative!");
-		window.location.replace('./index.html');
-	}
+// Read ID to know of which post the details should be shown.
+url = new URL(window.location.href);
+var postId = url.searchParams.get("id");
+if (postId == null) {
+	alert("The activity is not specified. Please contact the administrative!");
+	window.location.href = '/index.html';
+}
 
-	var app = angular.module('ActivityMeterApp', [ 'ui.bootstrap' ]);
+var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
 
-	// Controller for the details-page
-	app.controller('DetailActivityCtrl', function($scope, $http, $dialog) {
-	// Get data for the activity from the Rest-API
-	function loadActivity ($scope, $http){
+// Get data for the activity from the Rest-API
+function loadActivity ($scope, $http){
 	$http({
 		method : 'GET',
    		url : 'activity/' + postId
@@ -38,49 +36,55 @@
 	});
 }
 
-		loadActivity($scope, $http);
-	});
+// Controller for the details-page
+app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
+  	
+	loadActivity($scope, $http);
 	
-		var editDialogOptions = {
-			    controller: 'EditActivityCtrl',
-			    //templateUrl: './activityEdit.html',
-			};
-		  	$scope.edit = function(activity){
-		  		window.location.replace('./activityEdit.html?id=' + activity.id);
-		  		window.location.href = './activityEdit.html?id=' + activity.id;
-		  	};
+	// Opens the edit-page
+	$scope.edit = function() {
+		window.location.href = 'activityEdit.html?id=' + postId;
 	}
+	
+	// Goes back to the homepage	
+	$scope.close = function(){
+	  		window.location.href = '/index.html';
+	};
+});
 </script>
 
 
 </head>
 <body>
-	<div id="content">
-		<div id="head">
-			<img src="images/HM_Logo.jpeg" />
-			<h1>EduLife</h1>
-			<img src="images/Cal-Poly_Logo.jpeg" />
+<div id="content">
+	<div id="head">
+		<img src="images/HM_Logo.jpeg" />
+		<h1>EduLife</h1>
+		<img src="images/Cal-Poly_Logo.jpeg" />
+	</div>
+	<div id="menu">
+		<a href="./index.html">Home</a>
+		<a href="./activityAdd.html">Add Activity</a>
+	</div>
+	<div id="body" ng-controller="DetailActivityCtrl">
+		<h3>{{activity.title}}</h3>
+		<div class="item">
+			<div class="key">Text:</div>
+			<div class="value">{{activity.text}}&nbsp;</div>
 		</div>
-		<div id="menu">
-			<a href="./index.html">Home</a> <a href="./activityAdd.html">Add
-				Activity</a>
+		<div class="item">
+			<div class="key">Tags:</div>
+			<div class="value">{{activity.tags}}&nbsp;</div>
 		</div>
-		<div id="body" ng-controller="DetailActivityCtrl">
-			<h3>{{activity.title}}</h3>
-			<div class="item">
-				<div class="key">Text:</div>
-				<div class="value">{{activity.text}}&nbsp;</div>
-			</div>
-			<div class="item">
-				<div class="key">Creation Date:</div>
-				<div class="value">{{activity.creationDate}}&nbsp;</div>
-			</div>
-			<div class="item">
-				<div class="key">Tags:</div>
-				<div class="value">{{activity.tags}}&nbsp;</div>
-			</div>
-			<div class="buttons">
-				<button	class="mdl-button" ng-click="edit(activity)">Edit & Delete</button>
-			</div>
+		<div class="item">
+			<div class="key">Creation Date:</div>
+			<div class="value">{{activity.creationDate}}&nbsp;</div>
+		</div>
+		<div class="buttons">
+			<button ng-click="edit()">Edit & Delete</button>
+			<button ng-click="close()">Close</button>
+		</div>
+	</div>
+</div>
 </body>
 </html>

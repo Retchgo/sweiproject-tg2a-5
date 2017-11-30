@@ -86,6 +86,10 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 	    	//loadActivities($scope, $http);
 	       // }) ;
 	  	};
+	  	
+	  	$scope.close = function(){
+	  		window.location.href = './index.html';
+	  	};
 });
 </script>
 
@@ -118,6 +122,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 		<div class="buttons">
 			<button ng-click="edit()">Save</button>
 			<button ng-click="deleteActivity()">Delete</button>
+			<button ng-click="close()">Close</button>
 		</div>
 	</div>
 </div>
