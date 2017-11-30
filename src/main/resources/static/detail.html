@@ -40,6 +40,16 @@
 
 		loadActivity($scope, $http);
 	});
+	
+		var editDialogOptions = {
+			    controller: 'EditActivityCtrl',
+			    //templateUrl: './activityEdit.html',
+			};
+		  	$scope.edit = function(activity){
+		  		window.location.replace('./activityEdit.html?id=' + activity.id);
+		  		window.location.href = './activityEdit.html?id=' + activity.id;
+		  	};
+	}
 </script>
 
 
@@ -70,7 +80,7 @@
 				<div class="value">{{activity.tags}}&nbsp;</div>
 			</div>
 			<div class="buttons">
-				<a href='./activityEdit.html?id={{activity.id}}'>Edit & Delete</a>
+				<button	class="mdl-button" ng-click="edit(activity)">Edit & Delete</button>
 			</div>
 </body>
 </html>
