@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
-    <artifactId>EduLife</artifactId>
+    <artifactId>edulife</artifactId>
     <version>1.0</version>
 
     <parent>
