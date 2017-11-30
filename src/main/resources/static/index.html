@@ -60,19 +60,17 @@ app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 
   	var editDialogOptions = {
 	    controller: 'EditActivityCtrl',
-	    templateUrl: './activityEdit.html',
+	    //templateUrl: './activityEdit.html',
 	};
   	$scope.edit = function(activity){
-  		window.location.replace('./activityEdit.html?id=' + activity.id, 'Edit');
-  		window.location.href = './activityEdit.html';
+  		window.location.replace('./activityEdit.html?id=' + activity.id);
+  		window.location.href = './activityEdit.html?id=' + activity.id;
   	};
 
-
-
-			$scope.detail = function(activity){
-				var id = activity.id;
-				window.location.href = './detail.html?id='+id;
-			};
+	$scope.detail = function(activity){
+		var id = activity.id;
+		window.location.href = './detail.html?id='+id;
+	};
 
 /*
 		$scope.detail = function(activity){
@@ -176,8 +174,8 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 				<td class="mdl-data-table__cell--non-numeric">{{activity.text}}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{activity.tags}}</td>
 				<td class="mdl-data-table__cell--non-numeric">
-					<button	class="mdl-button" ng-click="edit(activity)">edit</button>
-					<button class="mdl-button" ng-click="detail(activity)">Details anzeigen</button></td>
+					<button	class="mdl-button" ng-click="edit(activity)">Edit</button>
+					<button class="mdl-button" ng-click="detail(activity)">Details</button></td>
 
 			</tr>
 		</table>

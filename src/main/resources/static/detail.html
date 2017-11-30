@@ -17,42 +17,13 @@
 		alert("The activity is not specified. Please contact the administrative!");
 		window.location.replace('./index.html');
 	}
-<link rel="stylesheet" type= "text/css" href="style.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>
-<!--<script src="/angular/angular.min.js"></script>
-<script src="/angular/ui-bootstrap-tpls-0.1.0.js"></script>-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-// Read ID to know of which post the details should be shown.
-url = new URL(window.location.href);
-var postId = url.searchParams.get("id");
-if (postId == null) {
-	alert("The activity is not specified. Please contact the administrative!");
-	window.location.href = '/index.html';
-}
 
 	var app = angular.module('ActivityMeterApp', [ 'ui.bootstrap' ]);
 
-	// Get data for the activity from the Rest-API
-	function loadActivity($scope, $http) {
-		$http({
-			method : 'GET',
-			url : 'activity/' + postId
-		}).then(function(response) {
-			if (response.status != 200 || response.data.id == undefined) {
-				alert("The activity you look for is not available!");
-				window.location.replace('./index.html');
-			} else {
-				$scope.activity = response.data;
-			}
-		});
-	}
-
 	// Controller for the details-page
 	app.controller('DetailActivityCtrl', function($scope, $http, $dialog) {
-// Get data for the activity from the Rest-API
-function loadActivity ($scope, $http){
+	// Get data for the activity from the Rest-API
+	function loadActivity ($scope, $http){
 	$http({
 		method : 'GET',
    		url : 'activity/' + postId
@@ -99,35 +70,7 @@ function loadActivity ($scope, $http){
 				<div class="value">{{activity.tags}}&nbsp;</div>
 			</div>
 			<div class="buttons">
-				<a href='./activityEdit.html?id="{{activity.id}}"'>Edit & Delete</a>
+				<a href='./activityEdit.html?id={{activity.id}}'>Edit & Delete</a>
 			</div>
-<div id="content">
-	<div id="head">
-		<img src="images/HM_Logo.jpeg" />
-		<h1>EduLife</h1>
-		<img src="images/Cal-Poly_Logo.jpeg" />
-	</div>
-	<div id="menu">
-		<a href="./index.html">Home</a>
-		<a href="./activityAdd.html">Add Activity</a>
-	</div>
-	<div id="body" ng-controller="DetailActivityCtrl">
-		<h3>{{activity.title}}</h3>
-		<div class="item">
-			<div class="key">Text:</div>
-			<div class="value">{{activity.text}}&nbsp;</div>
-		</div>
-		<div class="item">
-			<div class="key">Tags:</div>
-			<div class="value">{{activity.tags}}&nbsp;</div>
-		</div>
-		<div class="item">
-			<div class="key">Creation Date:</div>
-			<div class="value">{{activity.creationDate}}&nbsp;</div>
-		</div>
-		<div class="buttons">
-			<a href='./activityEdit.html?id="{{activity.id}}"'>Edit & Delete</a>
-		</div>
-	</div>
 </body>
 </html>
