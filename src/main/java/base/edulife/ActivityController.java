@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Rest controller to provide or receipt informations about activities 
- * beween Munich university of applied science and Carl Poly university.
+ * beween Munich university of applied science and Cal Poly university.
  */
 @RestController
 @RequestMapping("/activity")
@@ -17,7 +17,6 @@ public class ActivityController {
   
   @Autowired
   private ActivityRepository activityRepository;
-  
   
   /**
    * Returns a list of all activities stored.
