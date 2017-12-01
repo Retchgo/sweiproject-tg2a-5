@@ -132,26 +132,17 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 	</div>
 	<div id="menu">
     	<a href="./index.html">Home</a> 
-    	<a href="./activityAdd.html">Add Activity</a>
+    	<a href="./activityAdd.html">Add Activity</a> <a href= "./addCategory.html">Add Category</a>
 	</div>
 	<div id = "body" ng-controller="AddActivityCtrl">
-		<h3>Add Activity</h3>
+		<h3>Add Category</h3>
 		<div class="item">
 		<div class="key">Title:</div>
 			<div class="value"><input ng-model="activity.title" rows="1" cols="60"></div>
 		</div>
-		<div class="item">
-		<div class="key">Text:</div>
-		<div class="value"><textarea class="large" ng-model="activity.text"></textarea></div>
-		</div>
-		<div class="item">
-		<div class="key">Tags:</div>
-		<div class="value"><textarea class="small" ng-model="activity.tags"></textarea></div>
-		</div>
-
 		<div class="buttons">
-			<button ng-click="save(activity)">Save</button>
-			<button ng-click="close()">Close</button>
+			<button>Save</button>
+			<button>Close</button>
 		</div>
 </div>
 </div>
