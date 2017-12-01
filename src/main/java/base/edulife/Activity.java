@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -14,7 +13,7 @@ import javax.persistence.Id;
 
 /**
  * Activity about the partnership between 
- * Munich university of applied science and Carl Poly university.
+ * Munich university of applied science and Cal Poly university.
  */
 @Entity
 public class Activity {
