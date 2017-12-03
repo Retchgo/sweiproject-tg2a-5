@@ -13,7 +13,7 @@ public class Category {
 	@Id
 	private String name;
 	
-	public Category(){};
+	public Category(){}
 	
 	public Category(String name){
 		this.name = name;

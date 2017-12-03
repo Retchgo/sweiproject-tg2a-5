@@ -23,14 +23,17 @@ public class Activity {
     private String title;
     private String text;
     private Set<String> tags = new HashSet<>();
-    private Date creationDate = new Date();
+    private final Date creationDate;
 
-    public Activity (){};
+    public Activity() {
+    	this("","","");
+    }
 
     public Activity(String text, String tags, String title) {
         this.title = title;
         this.text = text;
         setTags(tags);
+        creationDate = new Date();
     }
 
     @Id
@@ -60,11 +63,11 @@ public class Activity {
     }
     
     public String getTags() {
-      String tagString = "";
+    	StringBuilder tagString = new StringBuilder();
       for (String tag : tags) {
-    	  tagString = tagString + "#" + tag + " ";
+    	  tagString.append("#" + tag + " ");
       }
-      return tagString.trim();
+      return tagString.toString().trim();
     }
 
     public void setTags(String tags) {
@@ -82,5 +85,6 @@ public class Activity {
      * @param creationDate
      */
     public void setCreationDate(String creationDate) {
+    	// Does nothing because creationDate is not changeable but the setter is necessary to build the application
     }
 }

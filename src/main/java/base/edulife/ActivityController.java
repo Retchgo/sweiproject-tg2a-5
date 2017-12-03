@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Rest controller to provide or receipt informations about activities 
@@ -23,9 +24,9 @@ public class ActivityController {
    * @return list of all stored activities
    */
   @GetMapping
-  public ArrayList<Activity> listAll() {
-      ArrayList<Activity> activities = new ArrayList<>();
-      activityRepository.findAll().forEach(activity -> activities.add(activity));
+  public List<Activity> listAll() {
+      List<Activity> activities = new ArrayList<>();
+      activityRepository.findAll().forEach(activities::add);
       return activities;
   }
 
@@ -47,7 +48,7 @@ public class ActivityController {
    */
   @PostMapping
   public ResponseEntity<Activity> create(@RequestBody Activity input) {
-	  if (input == null || input.getText() == null || input.getTitle() == null || input.getTags() == null) {
+	  if (input == null || input.getTitle().equals("")) {
 		  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	  }
       return ResponseEntity.status(HttpStatus.OK).body(activityRepository.save(new Activity(input.getText(), input.getTags(), input.getTitle())));
@@ -76,7 +77,7 @@ public class ActivityController {
    */
   @PutMapping("{id}")
   public ResponseEntity<Activity> update(@PathVariable Long id, @RequestBody Activity input) {
-      if (!activityRepository.exists(id) || input == null || input.getText() == null || input.getTitle() == null || input.getTags() == null) {
+      if (!activityRepository.exists(id) || input.getTitle().equals("")) {
     	  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
       }
       Activity activity = activityRepository.findOne(id);
