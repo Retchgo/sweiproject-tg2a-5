@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class EduLifeController {
 
-    /**
-     * The default page is index.html. So if no page is specified
-     * index.html will be displayed in the browser.
-     * @return index.html
-     */
-	@GetMapping
-    public String index() {
-    	return "index.html";
-    }
+  /**
+   * The default page is index.html. So if no page is specified
+   * index.html will be displayed in the browser.
+   * @return index.html
+   */
+  @GetMapping
+  public String index() {
+    return "index.html";
+  }
 }

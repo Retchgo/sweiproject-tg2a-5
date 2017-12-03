@@ -1,8 +1,8 @@
 package base.edulife;
 
+import base.edulife.Activity;
 import org.springframework.data.repository.CrudRepository;
 
-import base.edulife.Activity;
 
 /**
  * Repository to store activities.
