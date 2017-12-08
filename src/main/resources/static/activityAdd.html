@@ -12,64 +12,29 @@
 <script>
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
 
-function loadActivities ($scope, $http){
+function loadCategories ($scope, $http){
 		$http({
        		 method : 'GET',
-       		 /*
-       		 url: (window.location.hostname === 'localhost' ?
-     				'http://localhost:8080/activity' :
-                    'https://activityexample.herokuapp.com/activity')
-             */
-             url: 'activity'
+             url: 'category'
+             
+             
 
     		}).then(function (response) {
-     			 $scope.activities = response.data;
+    			
+    			$scope.categories = response.data;
+    			
+    			var optionssting = "";
+     			 for(var category in response.data) {
+     				 optionsstring = optionsstring + "<option>"
+     			 }
   		});
   	}
 
-app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
-
-  	loadActivities($scope, $http);
-
-
-  	var addDialogOptions = {
-    	controller: 'AddActivityCtrl',
-    	templateUrl: './activityAdd.html'
-  	};
-
-  	$scope.add = function(){
-  		window.location.href = '/activityAdd.html';
-    	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
-    	//loadActivities($scope, $http);
-       // }) ;
-  	};
-
-  	var editDialogOptions = {
-	    controller: 'EditActivityCtrl',
-	    templateUrl: './activityEdit.html',
-	};
-  	$scope.edit = function(activity){
-   	 	var activityToEdit = activity;
-    	$dialog.dialog(angular.extend(editDialogOptions, {resolve: {activity: angular.copy(activityToEdit)}})).open().then(function (){
-    	    loadActivities($scope, $http);
-        }) ;
-  	};
-
-	$scope.delete = function(activity) {
-		var deleteRequest = {
-			method : 'DELETE',
-			url: 'activity/' + activity.id
-		};
-
-  		$http(deleteRequest).then(function() {
-			loadActivities($scope, $http);
-		});
-  		//todo handle error
-	};
-
-});
 app.controller('AddActivityCtrl', function($scope, $http, $dialog){
 
+	loadCategories($scope, $http);
+		
+	
 	  	$scope.save = function($activity) {
   		var postRequest = {
     	method : 'POST',
@@ -80,6 +45,8 @@ app.controller('AddActivityCtrl', function($scope, $http, $dialog){
   				title: $activity.title
 			  }
 		}
+  		
+  		
 
   		$http(postRequest).then(function (response) {
   		    $scope.activities = response.data;
@@ -93,33 +60,7 @@ app.controller('AddActivityCtrl', function($scope, $http, $dialog){
     	//dialog.close(undefined);
   	};
 });
-app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 
-	$scope.activity = activity;
-  	$scope.save = function($activity) {
-  	    var putRequest = {
-    	method : 'PUT',
-       	url: 'activity/' + $scope.activity.id,
-       	data: {
-  				text: $scope.activity.text,
-  				tags: $scope.activity.tags,
-  				title: $scope.activity.title
-			  }
-		}
-
-  		$http(putRequest).then(function (response) {
-  		    $scope.activities = response.data;
-  		}).then(function () {
-			//todo handle error
-			$scope.close();
-		});
-  	};
-
-  	$scope.close = function(){
-  		loadActivities($scope, $http);
-    	dialog.close();
-  	};
-});
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -139,7 +80,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 		<h3>Add Activity</h3>
 		<div class="item">
 		<div class="key">Kategorie:</div>
-			<div class="value">Platzhalter für Drop-Down</div>
+			<div class="value"><select ng-model="activity.category" ng-options="x.name for x in categories"></select></div>
 		</div>
 		<div class="item">
 		<div class="key">Title:</div>
