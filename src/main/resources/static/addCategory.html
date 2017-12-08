@@ -14,19 +14,17 @@ var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
 
 app.controller('AddCategoryCtrl', function($scope, $http, $dialog){
 
-	  	$scope.save = function($activity) {
-  		var postRequest = {
+	  	$scope.save = function($category) {
+  		var newCategory = {
     	method : 'POST',
-       	url: '/activity' ,
+       	url: '/category' ,
        	data: {
-  				text: $activity.text,
-  				tags: $activity.tags,
-  				title: $activity.title
+  				name: $category.name
 			  }
 		}
 
-  		$http(postRequest).then(function (response) {
-  		    $scope.activities = response.data;
+  		$http(newCategory).then(function (response) {
+  		    /*$scope.activities = response.data;*/
   		}).then(function () {
   			$scope.close();
   		});
@@ -37,33 +35,7 @@ app.controller('AddCategoryCtrl', function($scope, $http, $dialog){
   		window.location.href = './index.html';
   	};
 });
-app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 
-	$scope.activity = activity;
-  	$scope.save = function($activity) {
-  	    var putRequest = {
-    	method : 'PUT',
-       	url: 'activity/' + $scope.activity.id,
-       	data: {
-  				text: $scope.activity.text,
-  				tags: $scope.activity.tags,
-  				title: $scope.activity.title
-			  }
-		}
-
-  		$http(putRequest).then(function (response) {
-  		    $scope.activities = response.data;
-  		}).then(function () {
-			//todo handle error
-			$scope.close();
-		});
-  	};
-
-  	$scope.close = function(){
-  		loadActivities($scope, $http);
-    	dialog.close();
-  	};
-});
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -82,10 +54,10 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 		<h3>Add Category</h3>
 		<div class="item">
 		<div class="key">Title:</div>
-			<div class="value"><input ng-model="activity.title" rows="1" cols="60"></div>
+			<div class="value"><input ng-model="category.name" rows="1" cols="60"></div>
 		</div>
 		<div class="buttons">
-			<button>Save</button>
+			<button ng-click="save(category)">Save</button>
 			<button ng-click="close()">Close</button>
 		</div>
 </div>

@@ -26,12 +26,12 @@ public class CategoryController {
 	   * Returns a list of all categories stored.
 	   * @return list of all stored categories
 	   */
-	/*@GetMapping
+	@GetMapping
 	public ArrayList<Category> listAll() {
 		ArrayList<Category> cats = new ArrayList<>();
 		categoryRepository.findAll().forEach(category -> cats.add(category));
 		return cats;
-	}*
+	}
 	
 	  /**
 	   * Creates a new category. If the category is not completely
