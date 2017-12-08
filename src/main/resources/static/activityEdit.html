@@ -36,10 +36,29 @@ function loadActivity ($scope, $http){
 	});
 }
 
+function loadCategories ($scope, $http){
+	$http({
+   		 method : 'GET',
+         url: 'category'
+         
+         
+
+		}).then(function (response) {
+			
+			$scope.categories = response.data;
+			
+			var optionssting = "";
+ 			 for(var category in response.data) {
+ 				 optionsstring = optionsstring + "<option>"
+ 			 }
+		});
+	}
+
 // Controller for the details-page
 app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
   	
 	loadActivity($scope, $http);
+	loadCategories($scope, $http);
 	
 	var addDialogOptions = {
 	    	controller: 'EditActivityCtrl',
@@ -51,6 +70,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 	  		    	method : 'PUT',
 	  		       	url: 'activity/' + $scope.activity.id,
 	  		       	data: {
+	  		       			category: $scope.activity.category,
 	  		  				text: $scope.activity.text,
 	  		  				tags: $scope.activity.tags,
 	  		  				title: $scope.activity.title
@@ -91,9 +111,10 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 		 <a href= "./addCategory.html">Add Category</a>
 	</div>
 	<div id="body" ng-controller="EditActivityCtrl">
+	<h3>Edit Activity</h3>
 		<div class="item">
 		<div class="key">Kategorie:</div>
-			<div class="value">Platzhalter für Drop-Down</div>
+			<div class="value"><select ng-model="activity.category" ng-options="x.id as x.name for x in categories"></select></div>
 		</div>
 		<div class="item">
 			<div class="key">Title:</div>
