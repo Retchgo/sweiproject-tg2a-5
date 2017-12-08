@@ -50,6 +50,22 @@ app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
 	$scope.close = function(){
 	  		window.location.href = '/index.html';
 	};
+	
+	$scope.deleteActivity = function(){
+  		var deleteRequest = {
+  		    	method : 'DELETE',
+  		       	url: '/activity/' + postId,
+  		      	data: {}
+		}
+  		$http(deleteRequest).then(function (response) {
+	  	  	if (response.status != 200) {
+	  			alert("Error while deleting activity!");
+	  		}
+	  		else {
+	  			window.location.href = '/index.html';
+	  		}
+  		});
+  	};
 });
 </script>
 
@@ -85,7 +101,8 @@ app.controller('DetailActivityCtrl', function ($scope, $http, $dialog) {
 			<div class="value">{{activity.creationDate}}&nbsp;</div>
 		</div>
 		<div class="buttons">
-			<button ng-click="edit()">Edit & Delete</button>
+			<button ng-click="deleteActivity()">Delete</button>
+			<button ng-click="edit()">Edit</button>
 			<button ng-click="close()">Close</button>
 		</div>
 	</div>

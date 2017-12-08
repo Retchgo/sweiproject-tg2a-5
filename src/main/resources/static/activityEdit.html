@@ -70,25 +70,6 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 	       // }) ;
 	  	};
 	  	
-	  	$scope.deleteActivity = function(){
-	  		var deleteRequest = {
-	  		    	method : 'DELETE',
-	  		       	url: 'activity/' + $scope.activity.id,
-	  		      	data: {}
-				}
-	  		  		$http(deleteRequest).then(function (res) {
-	  		  		  
-	  		  		}).then(function () {
-	  					//todo handle error
-	  					$scope.close();
-	  				});
-	  		
-	  		window.location.replace('/index.html');
-	    	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
-	    	//loadActivities($scope, $http);
-	       // }) ;
-	  	};
-	  	
 	  	$scope.close = function(){
 	  		window.location.href = './index.html';
 	  	};
@@ -128,7 +109,6 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 		</div>
 		<div class="buttons">
 			<button ng-click="edit()">Save</button>
-			<button ng-click="deleteActivity()">Delete</button>
 			<button ng-click="close()">Close</button>
 		</div>
 	</div>
