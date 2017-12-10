@@ -1,6 +1,8 @@
 package base.edulife;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +32,9 @@ public class ActivityController {
    * @return list of all stored activities
    */
   @GetMapping
-  public ArrayList<Activity> listAll() {
+  public List<Activity> listAll() {
     ArrayList<Activity> activities = new ArrayList<>();
-    activityRepository.findAll().forEach(activity -> activities.add(activity));
+    activityRepository.findAll().forEach(activities::add);
     return activities;
   }
 
@@ -55,8 +57,7 @@ public class ActivityController {
   @PostMapping
   public ResponseEntity<Activity> create(@RequestBody Activity input) {
     if (input == null || input.getTitle() == null || input.getCategory() == null 
-        || input.getText() == null ||  input.getTags() == null 
-        || input.getCategory() == null) {
+        || input.getText() == null ||  input.getTags() == null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
     return ResponseEntity.status(HttpStatus.OK).body(activityRepository.save(

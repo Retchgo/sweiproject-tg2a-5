@@ -1,6 +1,7 @@
 package base.edulife;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,10 @@ public class CategoryController {
    * @return list of all stored categories
    */
   @GetMapping
-  public ArrayList<Category> listAll() {
-    ArrayList<Category> cats = new ArrayList<>();
-    categoryRepository.findAll().forEach(category -> cats.add(category));
-    return cats;
+  public List<Category> listAll() {
+    ArrayList<Category> categories = new ArrayList<>();
+    categoryRepository.findAll().forEach(categories::add);
+    return categories;
   }
 
   /**
