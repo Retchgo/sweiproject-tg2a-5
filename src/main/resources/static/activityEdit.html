@@ -62,6 +62,11 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 	
 	  	
 	$scope.edit = function($activity){
+		if ($activity.category == null) {
+			alert("There is no category selected. Please select one.");
+			return;
+		}
+		
 		var putRequest = {
 	  		method : 'PUT',
 	  		url: 'activity/' + $activity.id,

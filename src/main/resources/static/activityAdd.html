@@ -27,8 +27,12 @@ app.controller('AddActivityCtrl', function($scope, $http, $dialog){
 
 	loadCategories($scope, $http);
 		
-	
-	  	$scope.save = function($activity) {
+	$scope.save = function($activity) {
+  		if ($activity.category == null) {
+			alert("There is no category selected. Please select one.");
+			return;
+		}
+  		
   		var postRequest = {
     	method : 'POST',
        	url: '/activity' ,

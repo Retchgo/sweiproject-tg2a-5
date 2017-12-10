@@ -1,11 +1,18 @@
 package base.edulife;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 
 /**
  * Rest controller to provide or receipt informations about activities 
@@ -24,9 +31,9 @@ public class ActivityController {
    */
   @GetMapping
   public ArrayList<Activity> listAll() {
-      ArrayList<Activity> activities = new ArrayList<>();
-      activityRepository.findAll().forEach(activity -> activities.add(activity));
-      return activities;
+    ArrayList<Activity> activities = new ArrayList<>();
+    activityRepository.findAll().forEach(activity -> activities.add(activity));
+    return activities;
   }
 
   /**
@@ -36,7 +43,7 @@ public class ActivityController {
    */
   @GetMapping("{id}")
   public Activity find(@PathVariable Long id) {
-      return activityRepository.findOne(id);
+    return activityRepository.findOne(id);
   }
 
   /**
@@ -47,10 +54,13 @@ public class ActivityController {
    */
   @PostMapping
   public ResponseEntity<Activity> create(@RequestBody Activity input) {
-	  if (input == null || input.getTitle() == null || input.getCategory() == null || input.getText() == null ||  input.getTags() == null || input.getCategory() == null) {
-		  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-	  }
-      return ResponseEntity.status(HttpStatus.OK).body(activityRepository.save(new Activity(input.getText(), input.getCategory(), input.getTags(), input.getTitle())));
+    if (input == null || input.getTitle() == null || input.getCategory() == null 
+        || input.getText() == null ||  input.getTags() == null 
+        || input.getCategory() == null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+    return ResponseEntity.status(HttpStatus.OK).body(activityRepository.save(
+        new Activity(input.getText(), input.getCategory(), input.getTags(), input.getTitle())));
   }
 
   /**
@@ -60,11 +70,11 @@ public class ActivityController {
    */
   @DeleteMapping("{id}")
   public ResponseEntity<Activity> delete(@PathVariable Long id) {
-	  if (!activityRepository.exists(id)) {
-		  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-	  }
-	  activityRepository.delete(id);
-	  return ResponseEntity.status(HttpStatus.OK).body(null); 
+    if (!activityRepository.exists(id)) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+    activityRepository.delete(id);
+    return ResponseEntity.status(HttpStatus.OK).body(null); 
   }
 
   /**
@@ -76,15 +86,16 @@ public class ActivityController {
    */
   @PutMapping("{id}")
   public ResponseEntity<Activity> update(@PathVariable Long id, @RequestBody Activity input) {
-      if (!activityRepository.exists(id) || input == null || input.getText() == null || input.getTitle() == null || input.getTags() == null || input.getCategory() == null) {
-    	  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-      }
-      Activity activity = activityRepository.findOne(id);
-      activity.setText(input.getText());
-      activity.setTags(input.getTags());
-      activity.setTitle(input.getTitle());
-	  activity.setCategory(input.getCategory());
-      activityRepository.save(activity);
-      return ResponseEntity.status(HttpStatus.OK).body(activity);
+    if (!activityRepository.exists(id) || input == null || input.getText() == null 
+        || input.getTitle() == null || input.getTags() == null || input.getCategory() == null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+    Activity activity = activityRepository.findOne(id);
+    activity.setText(input.getText());
+    activity.setTags(input.getTags());
+    activity.setTitle(input.getTitle());
+    activity.setCategory(input.getCategory());
+    activityRepository.save(activity);
+    return ResponseEntity.status(HttpStatus.OK).body(activity);
   }
 }
