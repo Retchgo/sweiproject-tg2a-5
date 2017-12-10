@@ -9,7 +9,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "activity_category")
+@Table(name = "category")
 public class Category {
 		
 	@Id

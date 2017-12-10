@@ -4,8 +4,6 @@
 <meta charset="utf-8">
 <title>Activity Edit</title>
 <link rel="stylesheet" type= "text/css" href="style.css" />
-<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>-->
 <script src="/angular/angular.min.js"></script>
 <script src="/angular/ui-bootstrap-tpls-0.1.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,6 +30,7 @@ function loadActivity ($scope, $http){
 		}
 		else {
 			$scope.activity = response.data;
+			window.activity = response.data;
 		}
 	});
 }
@@ -40,59 +39,52 @@ function loadCategories ($scope, $http){
 	$http({
    		 method : 'GET',
          url: 'category'
-         
-         
 
-		}).then(function (response) {
-			
+	}).then(function (response) {
+		if (response.status != 200) {
+			alert("Error while loading categories!");
+		}
+		else {
 			$scope.categories = response.data;
-			
-			var optionssting = "";
- 			 for(var category in response.data) {
- 				 optionsstring = optionsstring + "<option>"
- 			 }
-		});
-	}
+		}
+	});
+}
 
 // Controller for the details-page
 app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
   	
-	loadActivity($scope, $http);
 	loadCategories($scope, $http);
+	loadActivity($scope, $http);
 	
-	var addDialogOptions = {
-	    	controller: 'EditActivityCtrl',
-	    	templateUrl: './activityAdd.html'
-	  	};
+	setTimeout(function(){
+    	document.querySelector('#categorySelection [label="' + window.activity.category.name +'"]').selected = true;
+	}, 300);
+	
 	  	
-	  	$scope.edit = function(){
-	  		var putRequest = {
-	  		    	method : 'PUT',
-	  		       	url: 'activity/' + $scope.activity.id,
-	  		       	data: {
-	  		       			category: $scope.activity.category,
-	  		  				text: $scope.activity.text,
-	  		  				tags: $scope.activity.tags,
-	  		  				title: $scope.activity.title
-	  					  }
-	  				}  
+	$scope.edit = function($activity){
+		var putRequest = {
+	  		method : 'PUT',
+	  		url: 'activity/' + $activity.id,
+	  		data: {
+	  			category: $activity.category,
+	  		  	text: $activity.text,
+	  		  	tags: $activity.tags,
+	  		  	title: $activity.title
+	  		}
+	  	}  
 	  				
-	  		  		$http(putRequest).then(function (response) {
-	  		  		    $scope.activities = response.data;
-	  		  		}).then(function () {
-	  					//todo handle error
-	  					$scope.close();
-	  				});
-	  		
-	  		window.location.replace('/index.html');
-	    	//$dialog.dialog.(angular.extend(addDialogOptions, {})).open().then(function (){
-	    	//loadActivities($scope, $http);
-	       // }) ;
-	  	};
+	  	$http(putRequest).then(function (response) {
+	  	 	if (response.status != 200) {
+	  	 		alert("Error while saving the changed activity!");
+	  	 	}
+	  	}).then(function () {
+	  		$scope.close();
+	  	});
+	};
 	  	
-	  	$scope.close = function(){
-	  		window.location.href = './index.html';
-	  	};
+	$scope.close = function(){
+		window.location.href = './index.html';
+	};
 });
 </script>
 
@@ -106,15 +98,15 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 		<img src="images/Cal-Poly_Logo.jpeg" />
 	</div>
 	<div id="menu">
-		<a href="./index.html">Home</a>
-		<a href="./activityAdd.html">Add Activity</a>
-		 <a href= "./addCategory.html">Add Category</a>
+		<a href="/index.html">Home</a>
+		<a href="/activityAdd.html">Add Activity</a>
+		 <a href= "/addCategory.html">Add Category</a>
 	</div>
 	<div id="body" ng-controller="EditActivityCtrl">
 	<h3>Edit Activity</h3>
 		<div class="item">
-		<div class="key">Kategorie:</div>
-			<div class="value"><select ng-model="activity.category" ng-options="x.id as x.name for x in categories"></select></div>
+			<div class="key">Category:</div>
+			<div class="value"><select id="categorySelection" ng-model="activity.category" ng-options="x.name for x in categories"></select></div>
 		</div>
 		<div class="item">
 			<div class="key">Title:</div>
@@ -124,12 +116,12 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 			<div class="key">Text:</div>
 			<div class="value"><textarea ng-model="activity.text" rows="1" cols="60"></textarea></div>
 		</div>
-		<div class="item""src/main/java/base/Application.java">
+		<div class="item">
 			<div class="key">Tags:</div>
 			<div class="value"><textarea ng-model="activity.tags" rows="1" cols="60"></textarea></div>
 		</div>
 		<div class="buttons">
-			<button ng-click="edit()">Save</button>
+			<button ng-click="edit(activity)">Save</button>
 			<button ng-click="close()">Close</button>
 		</div>
 	</div>

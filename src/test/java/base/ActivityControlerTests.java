@@ -41,19 +41,29 @@ public class ActivityControlerTests {
   
   @Test
   public void test02_createCategory() throws Exception {
-	  this.mockMvc.perform(post("/category").contentType(MediaType.APPLICATION_JSON)
-			  .content("{ \"name\": \"FirstCat\"}")).andExpect(status().isOk());
+    this.mockMvc.perform(post("/category").contentType(MediaType.APPLICATION_JSON)
+        .content("{ \"name\": \"FirstCat\"}")).andExpect(status().isOk())
+        .andExpect(content().json("{ \"name\": \"FirstCat\"}"));
+  }
+  
+  @Test
+  public void test03_createSecondCategory() throws Exception {
+    this.mockMvc.perform(post("/category").contentType(MediaType.APPLICATION_JSON)
+        .content("{ \"name\": \"SecondCat\"}")).andExpect(status().isOk())
+        .andExpect(content().json("{ \"name\": \"SecondCat\"}"));
   }
   
 
   @Test
-  public void test03_createActivity() throws Exception {
+  public void test04_createActivity() throws Exception {
     String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
     this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON)
-        .content("{ \"title\": \"Testactivity\", \"category\": \"FirstCat\", \"text\": \"Test zur Erstellung einer Activity\", "
+        .content("{ \"title\": \"Testactivity\", \"category\": {\"name\": \"FirstCat\"}, "
+        + "\"text\": \"Test zur Erstellung einer Activity\", "
         + "\"tags\": \"#test #probieren\"}")).andExpect(status().isOk()).andExpect(content()
         .json("{ \"id\": 1, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime
-        + "\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}"));
+        + "\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}"
+        + "\"category\": {\"name\": \"FirstCat\"}"));
   }
 
   @Test
@@ -65,10 +75,12 @@ public class ActivityControlerTests {
   public void test05_createAndDeleteActivity() throws Exception {
     String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
     this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON)
-        .content("{ \"title\": \"Testactivity\",  \"category\": \"FirstCat\",\"text\": \"Test zur Erstellung einer Activity\", "
+        .content("{ \"title\": \"Testactivity\",  \"category\": {\"name\": \"SecondCat\"},"
+        + "\"text\": \"Test zur Erstellung einer Activity\", "
         + "\"tags\": \"#test #probieren\"}")).andExpect(status().isOk()).andExpect(content()
         .json("{ \"id\": 2, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime 
-        + "\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}"));
+        + "\", \"text\": \"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}"
+        + "\"category\": {\"name\": \"SecondCat\"}"));
 
     this.mockMvc.perform(delete("/activity/2")).andExpect(status().isOk());
   }
@@ -77,40 +89,41 @@ public class ActivityControlerTests {
   public void test06_editActivity() throws Exception {
     String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
     this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON)
-        .content("{ \"title\": \"Testactivity\", \"category\": \"FirstCat\", \"text\": \"Test zur Erstellung einer Activity\", "
+        .content("{ \"title\": \"Testactivity\", \"category\": {\"name\": \"FirstCat\"}, "
+        + "\"text\": \"Test zur Erstellung einer Activity\", "
         + "\"tags\": \"#test #probieren\"}")).andExpect(status().isOk()).andExpect(content()
         .json("{ \"id\": 3, \"title\": \"Testactivity\", \"creationDate\": \"" + currentTime 
         + "\", \"text\": \"Test zur Erstellung einer Activity\", "
-        + "\"tags\": \"#test #probieren\"}"));
+        + "\"tags\": \"#test #probieren\"} \"category\": {\"name\": \"FirstCat\"}"));
 
     String newcurrentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
     this.mockMvc.perform(put("/activity/3").contentType(MediaType.APPLICATION_JSON)
         .content("{ \"title\": \"Testactivity2\", \"text\": "
-        + "\"Test zur Erstellung einer zweiten Activity\", \"category\": \"FirstCat\", "
+        + "\"Test zur Erstellung einer zweiten Activity\", \"category\": {\"name\": \"SecondCat\"},"
         + "\"tags\": \"#test #probieren #zwei\"}"))
         .andExpect(status().isOk()).andExpect(content()
         .json("{ \"id\": 3, \"title\": \"Testactivity2\", \"creationDate\": \"" + newcurrentTime
         + "\", \"text\": \"Test zur Erstellung einer zweiten Activity\", "
-        + "\"tags\": \"#test #probieren #zwei\"}"));
+        + "\"tags\": \"#test #probieren #zwei\"} \"category\": {\"name\": \"SecondCat\"}"));
   }
 
   @Test
   public void test07_createActivityToHaveMoreThanOne() throws Exception {
     String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
     this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON)
-        .content("{ \"title\": \"Activity 2\", \"category\": \"FirstCat\", \"text\": "
+        .content("{ \"title\": \"Activity 2\", \"category\": {\"name\": \"FirstCat\"}, \"text\": "
         + "\"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#2 #weitere\"}"))
         .andExpect(status().isOk()).andExpect(content()
         .json("{ \"id\": 4, \"title\": \"Activity 2\", \"creationDate\": \"" + currentTime 
         + "\", \"text\": \"Es wird noch eine weitere Activity benötigt\", "
-        + "\"tags\": \"#2 #weitere\"}" ));
+        + "\"tags\": \"#2 #weitere\"} \"category\": {\"name\": \"FirstCat\"}" ));
     this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON)
-        .content("{ \"title\": \"Activity 3\",  \"category\": \"FirstCat\", \"text\": "
+        .content("{ \"title\": \"Activity 3\", \"category\": {\"name\": \"SecondCat\"}, \"text\": "
         + "\"Es wird noch eine weitere Activity benötigt\", \"tags\": \"#3 #weitere\"}"))
         .andExpect(status().isOk()).andExpect(content()
         .json("{ \"id\": 5, \"title\": \"Activity 3\", \"creationDate\": \"" + currentTime
         + "\", \"text\": \"Es wird noch eine weitere Activity benötigt\", "
-        + "\"tags\": \"#3 #weitere\"}" ));
+        + "\"tags\": \"#3 #weitere\"} \"category\": {\"name\": \"SecondCat\"}" ));
   }
 
   @Test
@@ -119,13 +132,13 @@ public class ActivityControlerTests {
     this.mockMvc.perform(get("/activity")).andExpect(status().isOk()).andExpect(content()
         .json("[{ \"id\": 3, \"title\": \"Testactivity2\", \"creationDate\": \"" 
         + currentTime + "\", \"text\": \"Test zur Erstellung einer zweiten Activity\", "
-        + "\"tags\": \"#test #probieren #zwei\"},"
+        + "\"tags\": \"#test #probieren #zwei\", \"category\": {\"name\": \"SecondCat\"}},"
         + "{ \"id\": 4, \"title\": \"Activity 2\", \"creationDate\": \"" + currentTime
         + "\", \"text\": \"Es wird noch eine weitere Activity benötigt\", "
-        + "\"tags\": \"#2 #weitere\"},"
+        + "\"tags\": \"#2 #weitere\", \"category\": {\"name\": \"FirstCat\"}},"
         + "{ \"id\": 5, \"title\": \"Activity 3\", \"creationDate\": \"" + currentTime
         + "\", \"text\": \"Es wird noch eine weitere Activity benötigt\", "
-        + "\"tags\": \"#3 #weitere\"}]"));
+        + "\"tags\": \"#3 #weitere\", \"category\": {\"name\": \"SecondCat\"}}]"));
   }
 
   @Test
@@ -134,7 +147,7 @@ public class ActivityControlerTests {
     this.mockMvc.perform(get("/activity/4")).andExpect(status().isOk()).andExpect(content()
         .json("{ \"id\": 4, \"title\": \"Activity 2\", \"creationDate\": \"" + currentTime
         + "\", \"text\": \"Es wird noch eine weitere Activity benötigt\", "
-        + "\"tags\": \"#2 #weitere\"}"));
+        + "\"tags\": \"#2 #weitere\", \"category\": {\"name\": \"FirstCat\"}}"));
   }
 
   @Test
@@ -145,7 +158,7 @@ public class ActivityControlerTests {
   @Test
   public void test11_editNotExistingActivity() throws Exception {
     this.mockMvc.perform(put("/activity/1").contentType(MediaType.APPLICATION_JSON)
-        .content("{ \"title\": \"Testactivity2\", \"category\": \"FirstCat\", \"text\": "
+        .content("{ \"title\": \"Testactivity2\", \"category\": {\"name\": \"FirstCat\"}, \"text\":"
         + "\"Test zur Erstellung einer zweiten Activity\", \"tags\": \"#test #probieren #zwei\"}"))
         .andExpect(status().isBadRequest());
   }
@@ -153,8 +166,8 @@ public class ActivityControlerTests {
   @Test
   public void test12_createInvalidActivity() throws Exception {
     this.mockMvc.perform(post("/activity").contentType(MediaType.APPLICATION_JSON)
-        .content("{ \"irgendwas\": \"Testactivity\",  \"category\": \"FirstCat\", \"text\": "
-        + "\"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}"))
+        .content("{ \"irgendwas\": \"Testactivity\",  \"category\": {\"name\": \"FirstCat\"}, "
+        + "\"text\":\"Test zur Erstellung einer Activity\", \"tags\": \"#test #probieren\"}"))
         .andExpect(status().isBadRequest());
   }
 }

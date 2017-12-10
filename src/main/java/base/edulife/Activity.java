@@ -1,17 +1,21 @@
 package base.edulife;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.web.bind.annotation.GetMapping;
 
 //import base.edulife.category.Category;
 
@@ -56,15 +60,15 @@ public class Activity {
     public void setTitle(String title) {
         this.title = title;
     }
-   
+
     @ManyToOne
-    @JoinColumn(name = "activity_category_name")
+    @JoinColumn(name = "category_name")
     public Category getCategory() {
 		return category;
 	}
 
 	public void setCategory(Category category) {
-		this.category = category;
+	  this.category = category;
 	}
 
     public String getText() {

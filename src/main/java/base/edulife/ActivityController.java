@@ -47,7 +47,7 @@ public class ActivityController {
    */
   @PostMapping
   public ResponseEntity<Activity> create(@RequestBody Activity input) {
-	  if (input == null || input.getTitle() == null || input.getCategory() == null || input.getText() == null ||  input.getTags() == null) {
+	  if (input == null || input.getTitle() == null || input.getCategory() == null || input.getText() == null ||  input.getTags() == null || input.getCategory() == null) {
 		  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	  }
       return ResponseEntity.status(HttpStatus.OK).body(activityRepository.save(new Activity(input.getText(), input.getCategory(), input.getTags(), input.getTitle())));
@@ -76,7 +76,7 @@ public class ActivityController {
    */
   @PutMapping("{id}")
   public ResponseEntity<Activity> update(@PathVariable Long id, @RequestBody Activity input) {
-      if (!activityRepository.exists(id) || input == null || input.getText() == null || input.getTitle() == null || input.getTags() == null) {
+      if (!activityRepository.exists(id) || input == null || input.getText() == null || input.getTitle() == null || input.getTags() == null || input.getCategory() == null) {
     	  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
       }
       Activity activity = activityRepository.findOne(id);

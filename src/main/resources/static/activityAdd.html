@@ -4,8 +4,6 @@
 <meta charset="utf-8">
 <title>Activity Details</title>
 <link rel="stylesheet" type= "text/css" href="style.css" />
-<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0.js"></script>-->
 <script src="/angular/angular.min.js"></script>
 <script src="/angular/ui-bootstrap-tpls-0.1.0.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,11 +20,6 @@ function loadCategories ($scope, $http){
     		}).then(function (response) {
     			
     			$scope.categories = response.data;
-    			
-    			var optionssting = "";
-     			 for(var category in response.data) {
-     				 optionsstring = optionsstring + "<option>"
-     			 }
   		});
   	}
 
@@ -80,8 +73,8 @@ app.controller('AddActivityCtrl', function($scope, $http, $dialog){
 	<div id = "body" ng-controller="AddActivityCtrl">
 		<h3>Add Activity</h3>
 		<div class="item">
-		<div class="key">Kategorie:</div>
-			<div class="value"><select ng-model="activity.category" ng-options="x.name for x in categories"></select></div>
+		<div class="key">Category:</div>
+		<div class="value"><select ng-model="activity.category" ng-options="x.name for x in categories"></select></div>
 		</div>
 		<div class="item">
 		<div class="key">Title:</div>
