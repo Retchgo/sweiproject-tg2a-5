@@ -165,9 +165,16 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 
 		<table class="mdl-data-table">
 			<tr>
-				<td class="mdl-data-table__cell--non-numeric" colspan=3>&nbsp;</td>
-				<td class="mdl-data-table__cell--non-numeric"><button class="mdl-button" ng-click="add()">add Activity</button></td>
+				<td class="mdl-data-table__cell--non-numeric" colspan=0><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for title.."></td>
+				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for tags.."></td>
+				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for dates.."></td>
+				<td class="mdl-date-table__cell--non-numeric" colspan=1><select ng-model="activity.category" ng-options="x.name for x in categories"></select></td>
+				<td class="mdl-data-table__cell--non-numeric" colspan=1><button class="mdl-button" ng-click="add()">add Activity</button></td>
+
+				<td>&nbsp</td>
 			</tr>
+
+
 			<tr ng-repeat="activity in activities">
 				<td class="mdl-data-table__cell--non-numeric">{{activity.title}}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{activity.text}}</td>
