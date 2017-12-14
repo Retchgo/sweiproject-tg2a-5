@@ -34,6 +34,7 @@ function loadCategories ($scope, $http){
     		}).then(function (response) {
 
     			$scope.categories = response.data;
+    			window.categories = response.data;
   		});
   	}
 
@@ -55,6 +56,16 @@ function loadActivities ($scope, $http){
 app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
 	  loadCategories($scope, $http);
   	loadActivities($scope, $http);
+  	
+  	setTimeout(function(){
+  		var optionstring = "<option value=\"\">-- select category --</option>";
+    	(window.categories).forEach(function(element) {
+    		optionstring = optionstring + "<option value=\"" + element.name + "\">" + element.name + "</option>";
+		});
+		document.getElementById("categorieselector").innerHTML = optionstring;
+	}, 300);
+  	
+  	
 
 
   	var addDialogOptions = {
@@ -183,7 +194,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 				<td class="mdl-data-table__cell--non-numeric" colspan=0><input type="text" ng-model = "f.title" placeholder="Search for title.."></td>
 				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" ng-model = "f.tags" placeholder="Search for tags.."></td>
 				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" ng-model = "f.creationDate" placeholder="Search for dates.."></td>
-				<td class="value" colspan=1><select ng-model="f.category.name" ng-options="x.name for x in categories"><option value = ""> -- select category -- </option></select></td>
+				<td class="value" colspan=1><select id="categorieselector" ng-model="f.category.name"><option value=\"\">-- select category --</option></select></td>
 
 				<td class="mdl-data-table__cell--non-numeric" colspan=1><button class="mdl-button" ng-click="add()">add Activity</button></td>
 
