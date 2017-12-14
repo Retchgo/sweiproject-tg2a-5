@@ -195,8 +195,6 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 				<td class="mdl-data-table__cell--non-numeric">{{activity.title}}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{activity.text}}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{activity.tags}}</td>
-				<td class="mdl-data-table__cell--non-numeric">{{activity.category.name}}</td>
-				<td class="mdl-data-table__cell--non-numeric">{{activity.creationDate}}</td>
 				<td class="mdl-data-table__cell--non-numeric">
 					<button	class="mdl-button" ng-click="edit(activity)">Edit</button>
 					<button class="mdl-button" ng-click="detail(activity)">Details</button></td>
