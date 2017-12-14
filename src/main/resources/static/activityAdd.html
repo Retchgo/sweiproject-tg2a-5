@@ -2,7 +2,7 @@
 <html ng-app="ActivityMeterApp">
 <head>
 <meta charset="utf-8">
-<title>Activity Details</title>
+<title>Add Activity</title>
 <link rel="stylesheet" type= "text/css" href="style.css" />
 <script src="/angular/angular.min.js"></script>
 <script src="/angular/ui-bootstrap-tpls-0.1.0.js"></script>
@@ -14,11 +14,11 @@ function loadCategories ($scope, $http){
 		$http({
        		 method : 'GET',
              url: 'category'
-             
-             
+
+
 
     		}).then(function (response) {
-    			
+
     			$scope.categories = response.data;
   		});
   	}
@@ -26,13 +26,13 @@ function loadCategories ($scope, $http){
 app.controller('AddActivityCtrl', function($scope, $http, $dialog){
 
 	loadCategories($scope, $http);
-		
+
 	$scope.save = function($activity) {
   		if ($activity.category == null) {
 			alert("There is no category selected. Please select one.");
 			return;
 		}
-  		
+
   		var postRequest = {
     	method : 'POST',
        	url: '/activity' ,
@@ -43,8 +43,8 @@ app.controller('AddActivityCtrl', function($scope, $http, $dialog){
   				title: $activity.title
 			  }
 		}
-  		
-  		
+
+
 
   		$http(postRequest).then(function (response) {
   		    $scope.activities = response.data;
@@ -71,7 +71,7 @@ app.controller('AddActivityCtrl', function($scope, $http, $dialog){
 	</div>
 	<div id="menu">
 		<a href="./index.html">Home</a>
-		<a href="./activityAdd.html">Add Activity</a> 
+		<a href="./activityAdd.html">Add Activity</a>
 		<a href="./addCategory.html">Add Category</a>
 	</div>
 	<div id = "body" ng-controller="AddActivityCtrl">

@@ -24,6 +24,19 @@
 <script>
 var app = angular.module('ActivityMeterApp', ['ui.bootstrap']);
 
+function loadCategories ($scope, $http){
+		$http({
+       		 method : 'GET',
+             url: 'category'
+
+
+
+    		}).then(function (response) {
+
+    			$scope.categories = response.data;
+  		});
+  	}
+
 function loadActivities ($scope, $http){
 		$http({
        		 method : 'GET',
@@ -118,6 +131,8 @@ app.controller('AddActivityCtrl', function($scope, $http, dialog){
 });
 app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 
+	loadCategories($scope, $http);
+
 	$scope.activity = activity;
   	$scope.save = function($activity) {
   	    var putRequest = {
@@ -168,7 +183,7 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 				<td class="mdl-data-table__cell--non-numeric" colspan=0><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for title.."></td>
 				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for tags.."></td>
 				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for dates.."></td>
-				<td class="mdl-date-table__cell--non-numeric" colspan=1><select ng-model="activity.category" ng-options="x.name for x in categories"></select></td>
+				<td class="value" colspan=1><select ng-model="activity.category" ng-options="x.name for x in categories"></select></td>
 				<td class="mdl-data-table__cell--non-numeric" colspan=1><button class="mdl-button" ng-click="add()">add Activity</button></td>
 
 				<td>&nbsp</td>
