@@ -53,7 +53,7 @@ function loadActivities ($scope, $http){
   	}
 
 app.controller('ActivityCtrl', function ($scope, $http, $dialog) {
-
+	  loadCategories($scope, $http);
   	loadActivities($scope, $http);
 
 
@@ -180,20 +180,22 @@ app.controller('EditActivityCtrl', function ($scope, $http, activity, dialog) {
 
 		<table class="mdl-data-table">
 			<tr>
-				<td class="mdl-data-table__cell--non-numeric" colspan=0><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for title.."></td>
-				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for tags.."></td>
-				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" id="datesearch" onkeyup="search()" placeholder="Search for dates.."></td>
-				<td class="value" colspan=1><select ng-model="activity.category" ng-options="x.name for x in categories"></select></td>
+				<td class="mdl-data-table__cell--non-numeric" colspan=0><input type="text" ng-model = "f.title" placeholder="Search for title.."></td>
+				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" ng-model = "f.tags" placeholder="Search for tags.."></td>
+				<td class="mdl-data-table__cell--non-numeric" colspan=1><input type="text" ng-model = "f.creationDate" placeholder="Search for dates.."></td>
+				<td class="value" colspan=1><select ng-model="f.category.name" ng-options="x.name for x in categories"></select></td>
 				<td class="mdl-data-table__cell--non-numeric" colspan=1><button class="mdl-button" ng-click="add()">add Activity</button></td>
 
 				<td>&nbsp</td>
 			</tr>
 
 
-			<tr ng-repeat="activity in activities">
+			<tr ng-repeat="activity in activities | filter: f">
 				<td class="mdl-data-table__cell--non-numeric">{{activity.title}}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{activity.text}}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{activity.tags}}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{activity.category.name}}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{activity.creationDate}}</td>
 				<td class="mdl-data-table__cell--non-numeric">
 					<button	class="mdl-button" ng-click="edit(activity)">Edit</button>
 					<button class="mdl-button" ng-click="detail(activity)">Details</button></td>
