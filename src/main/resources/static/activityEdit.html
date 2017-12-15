@@ -109,6 +109,10 @@ app.controller('EditActivityCtrl', function ($scope, $http, $dialog) {
 	</div>
 	<div id="body" ng-controller="EditActivityCtrl">
 	<h3>Edit Activity</h3>
+	<div class="item">
+		<div class="key">University:</div>
+		<div class="value">Platzhalter für Universität</div>
+		</div>
 		<div class="item">
 			<div class="key">Category:</div>
 			<div class="value"><select id="categorySelection" ng-model="activity.category" ng-options="x.name for x in categories"></select></div>
