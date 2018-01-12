@@ -1,4 +1,4 @@
-
+ï»¿
 # Demoprojekt sweiproject-example
 
 Ein Beispielprojekt als Grundlage für ein 'International Activity Meter'.
